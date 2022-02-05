@@ -1,0 +1,41 @@
+{
+  "public": false,
+  "scripts": {
+    "dev": "snowpack dev",
+    "build": "snowpack build",
+    "test": "jest",
+    "prepare": "husky install .husky",
+    "format": "redrun format:eslint format:prettier",
+    "format:eslint": "eslint --fix --ext .js  --ext .mjs --ext .svelte .",
+    "format:prettier": "prettier --write --plugin-search-dir=. './**/*.{js,mjs,svelte}'",
+    "format:check": "redrun format:check:eslint format:check:prettier",
+    "format:check:eslint": "eslint --ext .js --ext .svelte .",
+    "format:check:prettier": "prettier --check --plugin-search-dir=. './**/*.{js,mjs,svelte}'"
+  },
+  "devDependencies": {
+    "@snowpack/app-scripts-svelte": "^2.0.1",
+    "@snowpack/plugin-dotenv": "^2.2.0",
+    "@snowpack/plugin-postcss": "^1.4.3",
+    "@snowpack/plugin-run-script": "^2.3.0",
+    "@snowpack/plugin-svelte": "^3.7.0",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/svelte": "^3.0.3",
+    "autoprefixer": "^10.4.2",
+    "cssnano": "^5.0.16",
+    "eslint": "^8.8.0",
+    "eslint-plugin-jest": "^26.0.0",
+    "eslint-plugin-svelte3": "^3.4.0",
+    "husky": "^7.0.4",
+    "jest": "^26.4.7",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.6.0",
+    "redrun": "^9.0.1",
+    "snowpack": "^3.8.8",
+    "snowpack-plugin-rollup-bundle": "^0.4.4",
+    "svelte": "^3.46.3",
+    "svelte-check": "^2.3.0",
+    "tailwindcss": "^3.0.18"
+  }
+}
