@@ -1,7 +1,7 @@
 <script context="module">
 	import { onMount } from 'svelte'
 
-	import { drawMandelbrot } from 'src/canvas/draw'
+	import { drawMandelbrot } from 'src/utils/canvas/draw'
 </script>
 
 <script>
@@ -16,7 +16,7 @@
 	onMount(() => {
 		gl = canvas.getContext('2d')
 		gl.rect(0, 0, width, height)
-		gl.fillStyle = 'white'
+		gl.fillStyle = 'black'
 		gl.fill()
 		field = gl.getImageData(0, 0, width, height)
 

@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "snowpack dev",
     "build": "snowpack build",
+    "build:wasm": "./scripts/build/wasm.sh",
     "test": "jest",
     "prepare": "husky install .husky",
     "format": "redrun format:eslint format:prettier",

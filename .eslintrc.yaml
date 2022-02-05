@@ -10,6 +10,7 @@ ignorePatterns:
   - node_modules
   - public
   - build
+  - src/wasm
 extends: eslint:recommended
 globals:
   Atomics: readonly
