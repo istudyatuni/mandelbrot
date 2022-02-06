@@ -14,6 +14,11 @@ PARAMS="$O mandelbrot.cpp -o mandelbrot.js
 $@"
 
 cd src/wasm
-docker run --rm -v "$(pwd):/src" -u "$(id -u):$(id -g)" emscripten/emsdk em++ $PARAMS
+
+if [[ $GITHUB_ACTIONS == true ]]; then
+	em++ $PARAMS
+else
+	docker run --rm -v "$(pwd):/src" -u "$(id -u):$(id -g)" emscripten/emsdk em++ $PARAMS
+fi
 
 # options EXPORT_ES6, MODULARIZE, EXPORTED_RUNTIME_METHODS from https://stackoverflow.com/q/53309095
