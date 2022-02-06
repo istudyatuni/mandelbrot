@@ -34,6 +34,9 @@ jobs:
           cd build
           touch .nojekyll
 
+          cd dist/wasm
+          rm *.{sh,cpp}
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
