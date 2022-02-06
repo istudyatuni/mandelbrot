@@ -27,6 +27,8 @@ export default {
 	},
 	devOptions: {
 		open: 'none',
+		// with wasm it's can be slow and buggy
+		hmr: false,
 	},
 	buildOptions: {
 		htmlFragments: true,
