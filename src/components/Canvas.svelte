@@ -13,7 +13,7 @@
 		/** @type {ImageData} */
 		field
 
-	onMount(() => {
+	function draw() {
 		gl = canvas.getContext('2d')
 		gl.rect(0, 0, width, height)
 		gl.fillStyle = 'black'
@@ -23,7 +23,9 @@
 		field = drawMandelbrot(field)
 
 		gl.putImageData(field, 0, 0)
-	})
+	}
+
+	onMount(draw)
 </script>
 
 <canvas bind:this={canvas} {width} {height} />

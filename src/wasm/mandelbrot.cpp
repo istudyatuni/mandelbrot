@@ -1,22 +1,32 @@
-// #include <iostream>
-// using std::cout;
+// for testing
+#ifndef __EMSCRIPTEN__
+#include <iostream>
+using std::cout;
+#endif
 
 #include <complex>
+
+#ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
+#endif
 
 using std::complex;
 // using namespace std::complex_literals;
 
+#ifdef __EMSCRIPTEN__
 // for export with emscripten
 // https://stackoverflow.com/a/63879243
 extern "C" {
 	void calcPlane(double lx, double rx, int width, int height, short* result);
 }
+#endif
 
 const int R = 2, N = 100;
 const complex<double> z0 = 0;
 
+#ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
+#endif
 bool checkSeries(double x, double i) {
 	complex<double> point = complex<double>(x, i);
 	complex<double> num = z0 + point;
@@ -54,7 +64,9 @@ bool checkSeries(double x, double i) {
  * @param  height Height of display (canvas plane)
  * @return        Array with result
  */
+#ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
+#endif
 void calcPlane(double lx, double rx, int width, int height, short* result) {
 	// total width of x axis (complex plane)
 	double xwidth = std::abs(lx) + std::abs(rx);
@@ -76,20 +88,23 @@ void calcPlane(double lx, double rx, int width, int height, short* result) {
 	}
 }
 
-// uncomment to test
-/*int main() {
+// for testing
+#ifndef __EMSCRIPTEN__
+int main() {
 	int width = 1600, height = 717;
 	// left and right x coord
 	double lx = -2, rx = 1;
 
-	int * res = calcPlane(lx, rx, width, height);
+	short* res = new short[width * height];
+	calcPlane(lx, rx, width, height, res);
 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			cout << "(" << i << ", " << j << "): "
-				<< res[i + j * width] << '\n';
+			cout << res[i + j * width] << ' ';
+			// cout << "(" << i << ", " << j << "): " << res[i + j * width] << '\n';
 		}
 	}
 
 	cout << '\n';
-}*/
+}
+#endif
