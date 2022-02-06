@@ -3,15 +3,17 @@
 # optimization
 O='-O3'
 
-cd src/wasm
+PARAMS="$O mandelbrot.cpp -o mandelbrot.js
+-s NO_EXIT_RUNTIME=1
+-s EXPORTED_RUNTIME_METHODS=ccall,cwrap,getValue
+-s EXPORTED_FUNCTIONS=_calcPlane,_malloc,_free
+-s ALLOW_MEMORY_GROWTH=1
+-s EXPORT_ES6=1
+-s MODULARIZE=1
+-s ENVIRONMENT=web
+$@"
 
-docker run --rm -v "$(pwd):/src" -u "$(id -u):$(id -g)" emscripten/emsdk \
-em++ $O mandelbrot.cpp -o mandelbrot.js \
-	-s NO_EXIT_RUNTIME=1 \
-	-s EXPORTED_RUNTIME_METHODS=ccall,cwrap \
-	-s EXPORTED_FUNCTIONS=_checkSeries \
-	-s EXPORT_ES6=1 \
-	-s MODULARIZE=1 \
-	$@
+cd src/wasm
+docker run --rm -v "$(pwd):/src" -u "$(id -u):$(id -g)" emscripten/emsdk em++ $PARAMS
 
 # options EXPORT_ES6, MODULARIZE, EXPORTED_RUNTIME_METHODS from https://stackoverflow.com/q/53309095

@@ -1,22 +1,24 @@
-import { wasmLoaded } from 'src/stores/loaded'
+import { wasmLoaded, loading } from 'src/stores/load'
 
-import Module from 'src/wasm/mandelbrot.js'
+import { default as MandelbrotModule } from 'src/wasm/mandelbrot.js'
 
-let checkSeries
+let Module
+let calcPlane
 
 // https://stackoverflow.com/a/53384917
-Module().then(function (mod) {
-	checkSeries = mod.cwrap('checkSeries', 'boolean', ['number', 'number'])
+MandelbrotModule().then(function (mod) {
+	Module = mod
+	calcPlane = mod.cwrap('calcPlane', null, [
+		'number',
+		'number',
+		'number',
+		'number',
+		'array',
+	])
+
 	wasmLoaded.set(true)
+	loading.set(false)
 })
-
-function coords2complex(x, y /*, sx, sy*/, sw, sh) {
-	return [x - sw / 2, sh - y - sh / 2]
-}
-
-function calcDataPos(x, y, w) {
-	return (x * w + y) * 4
-}
 
 /**
  * Draw mandelbrot on image
@@ -24,28 +26,36 @@ function calcDataPos(x, y, w) {
  * @return {ImageData}       Resulting image
  */
 export function drawMandelbrot(image) {
-	const width = image.width,
-		height = image.height
-	let pos, a, b, c
+	loading.set(true)
 
-	for (let x = 0; x < width; x++) {
-		for (let y = 0; y < height; y++) {
-			console.log('i')
+	let w = image.width,
+		h = image.height
 
-			c = coords2complex(x, y, width, height)
-			a = c[0]
-			b = c[1]
+	const len = w * h
 
-			if (checkSeries(a, b)) {
-				pos = calcDataPos(x, y, width)
+	// https://stackoverflow.com/a/23917034
+	let result = Module._malloc(len)
+	Module.HEAP8.set(new Int8Array(Array(len)).buffer)
 
-				// black
-				image.data[pos] = 0
-				image.data[pos + 1] = 0
-				image.data[pos + 2] = 0
-			}
+	calcPlane(-2, 1, w, h, result)
+
+	for (let i = 0, j = 0; i < len; i++, j += 4) {
+		if (Module.getValue(result + i)) {
+			// black
+			image.data[j] = 0
+			image.data[j + 1] = 0
+			image.data[j + 2] = 0
+		} else {
+			// white
+			image.data[j] = 255
+			image.data[j + 1] = 255
+			image.data[j + 2] = 255
 		}
 	}
+
+	Module._free(result)
+
+	loading.set(false)
 
 	return image
 }
