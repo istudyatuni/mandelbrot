@@ -33,7 +33,10 @@ export function drawMandelbrot(image) {
 
 	const len = w * h
 
+	// Work with arrays
 	// https://stackoverflow.com/a/23917034
+	// https://stackoverflow.com/a/41878939
+	// https://emscripten.org/docs/api_reference/preamble.js.html#getValue
 	let result = Module._malloc(len)
 	Module.HEAP8.set(new Int8Array(Array(len)).buffer)
 

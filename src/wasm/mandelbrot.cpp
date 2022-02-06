@@ -46,25 +46,27 @@ bool checkSeries(double x, double i) {
  * y
  * ```
  *
- * @param  lx     Left coordinate of x axis
- * @param  rx     Right coordinate of x axis
- * @param  width  Width of display - how many points to calculate
- * @param  height Height of display
+ * We made projection of complex plane to canvas plane.
+ *
+ * @param  lx     Left coordinate of x axis (complex plane)
+ * @param  rx     Right coordinate of x axis (complex plane)
+ * @param  width  Width of display (canvas plane) - how many points to calculate
+ * @param  height Height of display (canvas plane)
  * @return        Array with result
  */
 EMSCRIPTEN_KEEPALIVE
 void calcPlane(double lx, double rx, int width, int height, short* result) {
-	// width of x axis, not in pixels
+	// total width of x axis (complex plane)
 	double xwidth = std::abs(lx) + std::abs(rx);
 
-	// scale coefficient of plane and display
+	// scale coefficient between complex plane and canvas
 	double scale = width / xwidth;
 
 	// height of y axis
 	double yheight = height / scale;
 
 	// top and down y coordinate
-	// now hardcode, y axis on screen center
+	// now hardcode, y axis on canvas center
 	double ty = yheight / 2, dy = yheight / 2;
 
 	// int* result = new int[width * height];
