@@ -69,20 +69,11 @@ void calcPlane(double lx, double rx, int width, int height, short* result) {
 	// now hardcode, y axis on canvas center
 	double ty = yheight / 2, dy = yheight / 2;
 
-	// int* result = new int[width * height];
-
-	double x, y;
-
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			x = lx + i / scale;
-			y = ty - j / scale;
-
-			result[i + j * width] = checkSeries(x, y);
+			result[i + j * width] = checkSeries(lx + i / scale, ty - j / scale);
 		}
 	}
-
-	// return result;
 }
 
 // uncomment to test
