@@ -3,6 +3,7 @@
 # optimization
 O='-O3'
 
+# -s MALLOC=emmalloc
 PARAMS="$O mandelbrot.cpp -o mandelbrot.js
 -s NO_EXIT_RUNTIME=1
 -s EXPORTED_RUNTIME_METHODS=ccall,cwrap,getValue
@@ -11,6 +12,7 @@ PARAMS="$O mandelbrot.cpp -o mandelbrot.js
 -s EXPORT_ES6=1
 -s MODULARIZE=1
 -s ENVIRONMENT=web
+-ffast-math
 $@"
 
 cd src/wasm
