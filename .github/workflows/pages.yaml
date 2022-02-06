@@ -19,7 +19,9 @@ jobs:
           #  so make sure it doesn't conflict with anything!
           actions-cache-folder: 'emsdk-cache'
       - name: Verify emsdk
-        run: emcc -v
+        run: |
+          python --version
+          emcc -v
       - name: Build WASM
         run: ./scripts/build/wasm.sh
 
