@@ -1,12 +1,12 @@
-import { wasm } from 'src/stores/load'
-
 import { default as MandelbrotModule } from 'src/wasm/mandelbrot.js'
 
 let Module
 let calcPlane
 
+let ModulePromise = MandelbrotModule()
+
 // https://stackoverflow.com/a/53384917
-MandelbrotModule().then(function (mod) {
+function init(mod) {
 	Module = mod
 	calcPlane = mod.cwrap('calcPlane', null, [
 		'number',
@@ -15,17 +15,21 @@ MandelbrotModule().then(function (mod) {
 		'number',
 		'array',
 	])
-
-	wasm.set('ready')
-})
+}
 
 /**
  * Draw mandelbrot on image
  *
  * @param  {ImageData} image Image from canvas
- * @return {ImageData}       Resulting image
+ * @return {Promise<ImageData>}       Resulting image
  */
-export function drawMandelbrot(image) {
+export async function drawMandelbrot(image) {
+	if (ModulePromise !== null) {
+		init(await ModulePromise)
+
+		ModulePromise = null
+	}
+
 	let w = image.width,
 		h = image.height
 

@@ -9,10 +9,6 @@
 <script>
 	export let width, height
 
-	$: {
-		if ($wasm === 'ready') draw()
-	}
-
 	/** @type {HTMLCanvasElement} */
 	let canvas,
 		gl = null,
@@ -24,15 +20,18 @@
 		gl.rect(0, 0, width, height)
 		gl.fillStyle = 'white'
 		gl.fill()
+
+		draw()
 	}
 
 	export async function draw() {
+		// not works (status not shown)
 		wasm.set('calc')
 		await tick()
 
 		field = gl.getImageData(0, 0, width, height)
 
-		field = drawMandelbrot(field)
+		field = await drawMandelbrot(field)
 
 		gl.putImageData(field, 0, 0)
 		wasm.set('none')
