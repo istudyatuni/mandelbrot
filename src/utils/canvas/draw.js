@@ -45,7 +45,9 @@ export function drawMandelbrot(image) {
 
 	let result = []
 	for (let i = 0; i < len; i++) {
-		result.push(Module.getValue(buffer + i))
+		// I don't know why, maybe it depends on types of array elements
+		// but multiply i by 2 helps to get right array from wasm
+		result.push(Module.getValue(buffer + i * 2))
 	}
 
 	Module._free(buffer)
