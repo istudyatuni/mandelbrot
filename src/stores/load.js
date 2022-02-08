@@ -1,5 +1,8 @@
-import { writable } from 'svelte/store'
+import { derived, writable } from 'svelte/store'
 
-export const loading = writable(true)
+// none, load, ready, calc
+export const wasm = writable('load')
 
-export const wasmLoaded = writable(false)
+export const load = derived(wasm, ($wasm, set) => {
+	set($wasm === 'calc' || $wasm === 'load')
+})

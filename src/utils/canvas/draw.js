@@ -1,4 +1,4 @@
-import { wasmLoaded, loading } from 'src/stores/load'
+import { wasm } from 'src/stores/load'
 
 import { default as MandelbrotModule } from 'src/wasm/mandelbrot.js'
 
@@ -16,8 +16,7 @@ MandelbrotModule().then(function (mod) {
 		'array',
 	])
 
-	wasmLoaded.set(true)
-	loading.set(false)
+	wasm.set('ready')
 })
 
 /**
@@ -27,8 +26,6 @@ MandelbrotModule().then(function (mod) {
  * @return {ImageData}       Resulting image
  */
 export function drawMandelbrot(image) {
-	loading.set(true)
-
 	let w = image.width,
 		h = image.height
 
@@ -41,11 +38,11 @@ export function drawMandelbrot(image) {
 	let buffer = Module._malloc(len)
 	Module.HEAP8.set(new Int8Array(Array(len)).buffer)
 
-	calcPlane(-2, 1, w, h, buffer)
+	calcPlane(-5, 3, w, h, buffer)
 
 	let result = []
 	for (let i = 0; i < len; i++) {
-		// I don't know why, maybe it depends on types of array elements
+		// I don't know why, maybe it depends on type of array elements
 		// but multiply i by 2 helps to get right array from wasm
 		result.push(Module.getValue(buffer + i * 2))
 	}
@@ -65,8 +62,6 @@ export function drawMandelbrot(image) {
 			image.data[j + 2] = 255
 		}
 	}
-
-	loading.set(false)
 
 	return image
 }

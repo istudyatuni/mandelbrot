@@ -1,20 +1,19 @@
 <script context="module">
 	import Canvas from 'src/components/Canvas.svelte'
-	import Spinner from 'src/components/Spinner.svelte'
-
-	import { loading, wasmLoaded } from 'src/stores/load'
+	import Settings from 'src/components/Settings.svelte'
 </script>
 
 <script>
 	let width, height
+
+	// function
+	let draw
 </script>
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
 
-{#if $loading}
-	<Spinner />
-{/if}
+<Settings {draw} />
 
-{#if width !== undefined && height !== undefined && $wasmLoaded}
-	<Canvas {width} {height} />
+{#if width !== undefined && height !== undefined}
+	<Canvas {width} {height} bind:draw />
 {/if}
