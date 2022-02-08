@@ -1,4 +1,8 @@
-// for testing
+/**
+ * #ifdef __EMSCRIPTEN__ for building with emsdk
+ * #ifndef __EMSCRIPTEN__ for local testing
+ */
+
 #ifndef __EMSCRIPTEN__
 #include <iostream>
 using std::cout;
@@ -81,29 +85,35 @@ void calcPlane(double lx, double rx, int width, int height, short* result) {
 	// now hardcode, y axis on canvas center
 	double ty = yheight / 2, dy = yheight / 2;
 
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
-			result[i + j * width] = checkSeries(lx + i / scale, ty - j / scale);
-		}
+	// x display, y display
+	int xd, yd;
+
+	for (int i = 0; i < width * height; i++) {
+		xd = i % width;
+		yd = i / width;
+		result[i] = checkSeries(lx + xd / scale, ty - yd / scale);
 	}
 }
 
-// for testing
 #ifndef __EMSCRIPTEN__
 int main() {
 	int width = 1600, height = 717;
 	// left and right x coord
-	double lx = -2, rx = 1;
+	double lx = -5, rx = 3;
 
 	short* res = new short[width * height];
 	calcPlane(lx, rx, width, height, res);
 
-	for (int i = 0; i < width; i++) {
+	for (int i = 0; i < width * height; i++) {
+		cout << res[i] << ' ';
+	}
+
+	/*for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			cout << res[i + j * width] << ' ';
 			// cout << "(" << i << ", " << j << "): " << res[i + j * width] << '\n';
 		}
-	}
+	}*/
 
 	cout << '\n';
 }
