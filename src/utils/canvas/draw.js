@@ -20,8 +20,10 @@ function init(mod) {
 /**
  * Draw mandelbrot on image
  *
- * @param  {ImageData} image Image from canvas
- * @return {Promise<ImageData>}       Resulting image
+ * @param  {ImageData}          image Image from canvas
+ * @param  {number}             lx    Left x of complex plane
+ * @param  {number}             rx    Right x of compmlex plane
+ * @return {Promise<ImageData>}       Promise with resulting image
  */
 export async function drawMandelbrot(image, lx, rx) {
 	if (ModulePromise !== null) {
