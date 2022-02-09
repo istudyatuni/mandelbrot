@@ -40,7 +40,7 @@ bool checkSeries(double x, double i) {
 			return false;
 		}
 
-		num = std::pow(num, 2) * point;
+		num = std::pow(num, 2) + point;
 	}
 
 	return true;
