@@ -28,7 +28,7 @@
 		draw()
 	}
 
-	export async function draw() {
+	async function draw() {
 		// not works (status not shown)
 		// wasm.set('calc')
 		// await tick()

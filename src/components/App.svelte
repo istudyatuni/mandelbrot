@@ -5,15 +5,12 @@
 
 <script>
 	let width, height
-
-	// function
-	let draw
 </script>
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
 
-<Settings {draw} />
+<Settings />
 
 {#if width !== undefined && height !== undefined}
-	<Canvas {width} {height} bind:draw />
+	<Canvas {width} {height} />
 {/if}

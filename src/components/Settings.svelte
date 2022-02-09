@@ -20,10 +20,6 @@
 </script>
 
 <script>
-	export let draw
-
-	// show
-
 	let show = true
 
 	function toggleShow() {
