@@ -73,7 +73,7 @@ EMSCRIPTEN_KEEPALIVE
 #endif
 void calcPlane(double lx, double rx, int width, int height, short* result) {
 	// total width of x axis (complex plane)
-	double xwidth = std::abs(lx) + std::abs(rx);
+	double xwidth = rx - lx;
 
 	// scale coefficient between complex plane and canvas
 	double scale = width / xwidth;
