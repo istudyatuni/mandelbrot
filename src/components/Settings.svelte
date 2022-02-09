@@ -3,13 +3,24 @@
 	import InputNumber from 'src/components/atoms/InputNumber.svelte'
 
 	import { settings } from 'src/stores/draw'
-	import { load } from 'src/stores/load'
+	import { wasm } from 'src/stores/load'
+
+	function getLoadText(state) {
+		/* eslint-disable indent */
+		switch (state) {
+			case 'load':
+			case 'calc':
+				return 'Loading'
+			case 'fail':
+				return 'Fail'
+			default:
+				return 'Refresh'
+		}
+	}
 </script>
 
 <script>
 	export let draw
-
-	$: loadText = $load ? 'Loading' : 'Refresh'
 
 	// show
 
@@ -24,7 +35,11 @@
 	{#if show}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Hide</Button>
-			<Button on:click={() => window.location.reload()}>{loadText}</Button>
+			<Button
+				on:click={() => window.location.reload()}
+				danger={$wasm === 'fail'}>
+				{getLoadText($wasm)}
+			</Button>
 		</div>
 
 		<div class="flex">

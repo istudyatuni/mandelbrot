@@ -1,5 +1,5 @@
 <script context="module">
-	import { onMount, tick } from 'svelte'
+	import { onMount } from 'svelte'
 
 	import { settings } from 'src/stores/draw'
 	import { wasm } from 'src/stores/load'
@@ -30,12 +30,22 @@
 
 	export async function draw() {
 		// not works (status not shown)
-		wasm.set('calc')
-		await tick()
+		// wasm.set('calc')
+		// await tick()
 
 		field = gl.getImageData(0, 0, width, height)
 
-		field = await drawMandelbrot(field, $settings.lx, $settings.rx)
+		try {
+			field = await drawMandelbrot(field, $settings.lx, $settings.rx)
+		} catch (e) {
+			if (e.name === 'RuntimeError') {
+				wasm.set('fail')
+				console.error(e)
+				return
+			}
+
+			throw e
+		}
 
 		gl.putImageData(field, 0, 0)
 		wasm.set('none')
