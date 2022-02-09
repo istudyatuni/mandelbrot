@@ -3,5 +3,5 @@
 </script>
 
 <span class="rounded mx-1 w-20">
-	<input type="number" class="w-full" bind:value />
+	<input type="number" class="w-full px-1 rounded" bind:value />
 </span>
