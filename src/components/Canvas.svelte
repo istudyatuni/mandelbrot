@@ -1,6 +1,7 @@
 <script context="module">
 	import { onMount, tick } from 'svelte'
 
+	import { settings } from 'src/stores/draw'
 	import { wasm } from 'src/stores/load'
 
 	import { drawMandelbrot } from 'src/utils/canvas/draw'
@@ -31,7 +32,7 @@
 
 		field = gl.getImageData(0, 0, width, height)
 
-		field = await drawMandelbrot(field)
+		field = await drawMandelbrot(field, $settings.lx, $settings.rx)
 
 		gl.putImageData(field, 0, 0)
 		wasm.set('none')

@@ -23,7 +23,7 @@ function init(mod) {
  * @param  {ImageData} image Image from canvas
  * @return {Promise<ImageData>}       Resulting image
  */
-export async function drawMandelbrot(image) {
+export async function drawMandelbrot(image, lx, rx) {
 	if (ModulePromise !== null) {
 		init(await ModulePromise)
 
@@ -42,7 +42,7 @@ export async function drawMandelbrot(image) {
 	let buffer = Module._malloc(len)
 	Module.HEAP8.set(new Int8Array(Array(len)).buffer)
 
-	calcPlane(-5, 3, w, h, buffer)
+	calcPlane(lx, rx, w, h, buffer)
 
 	let result = []
 	for (let i = 0; i < len; i++) {
