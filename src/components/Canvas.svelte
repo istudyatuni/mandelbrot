@@ -12,6 +12,7 @@
 
 	/** @type {HTMLCanvasElement} */
 	let canvas,
+		/** @type {CanvasRenderingContext2D} */
 		gl = null,
 		/** @type {ImageData} */
 		field
@@ -21,6 +22,8 @@
 		gl.rect(0, 0, width, height)
 		gl.fillStyle = 'white'
 		gl.fill()
+
+		gl.strokeStyle = 'black'
 
 		draw()
 	}
@@ -36,6 +39,30 @@
 
 		gl.putImageData(field, 0, 0)
 		wasm.set('none')
+
+		drawAxis($settings.lx, $settings.rx, width, height)
+	}
+
+	function drawAxis(lx, rx, width, height) {
+		if (lx < 0 && rx > 0) {
+			// y axis
+			let xw = rx - lx
+			let scale = width / xw
+			let ypix = Math.abs(lx) * scale
+
+			drawLine(ypix, 0, ypix, height)
+		}
+
+		// x axis now hardcoded to center
+		let xpix = height / 2
+		drawLine(0, xpix, width, xpix)
+	}
+
+	function drawLine(sx, sy, ex, ey) {
+		gl.beginPath()
+		gl.moveTo(sx, sy)
+		gl.lineTo(ex, ey)
+		gl.stroke()
 	}
 
 	onMount(init)
