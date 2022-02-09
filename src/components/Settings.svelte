@@ -24,7 +24,7 @@
 	{#if show}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Hide</Button>
-			<Button on:click={draw}>{loadText}</Button>
+			<Button on:click={() => window.location.reload()}>{loadText}</Button>
 		</div>
 
 		<div class="flex">
