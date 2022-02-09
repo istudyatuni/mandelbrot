@@ -42,7 +42,7 @@ export async function drawMandelbrot(image, lx, rx) {
 	// https://stackoverflow.com/a/41878939
 	// https://emscripten.org/docs/api_reference/preamble.js.html#getValue
 	let buffer = Module._malloc(len)
-	Module.HEAP8.set(new Int8Array(Array(len)).buffer)
+	Module.HEAP16.set(new Uint16Array(Array(len)).buffer)
 
 	calcPlane(lx, rx, w, h, buffer)
 

@@ -21,7 +21,7 @@ using std::complex;
 // for export with emscripten
 // https://stackoverflow.com/a/63879243
 extern "C" {
-	void calcPlane(double lx, double rx, int width, int height, short* result);
+	void calcPlane(double lx, double rx, int width, int height, unsigned short* result);
 }
 #endif
 
@@ -31,19 +31,19 @@ const complex<double> z0 = 0;
 #ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
 #endif
-bool checkSeries(double x, double i) {
+unsigned short checkSeries(double x, double i) {
 	complex<double> point = complex<double>(x, i);
 	complex<double> num = z0 + point;
 
 	for (int i = 0; i < N; i++) {
 		if (std::abs(num) >= R) {
-			return false;
+			return 0;
 		}
 
 		num = std::pow(num, 2) + point;
 	}
 
-	return true;
+	return 1;
 }
 
 /**
@@ -71,7 +71,7 @@ bool checkSeries(double x, double i) {
 #ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
 #endif
-void calcPlane(double lx, double rx, int width, int height, short* result) {
+void calcPlane(double lx, double rx, int width, int height, unsigned short* result) {
 	// total width of x axis (complex plane)
 	double xwidth = rx - lx;
 
@@ -101,7 +101,7 @@ int main() {
 	// left and right x coord
 	double lx = -5, rx = 3;
 
-	short* res = new short[width * height];
+	unsigned short* res = new unsigned short[width * height];
 	calcPlane(lx, rx, width, height, res);
 
 	for (int i = 0; i < width * height; i++) {
