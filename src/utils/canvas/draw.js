@@ -57,15 +57,15 @@ export async function drawMandelbrot(image, lx, rx) {
 
 	for (let i = 0, j = 0; i < len; i++, j += 4) {
 		if (result[i]) {
-			// black
-			image.data[j] = 0
-			image.data[j + 1] = 0
-			image.data[j + 2] = 0
-		} else {
 			// white
 			image.data[j] = 255
 			image.data[j + 1] = 255
 			image.data[j + 2] = 255
+		} else {
+			// black
+			image.data[j] = 0
+			image.data[j + 1] = 0
+			image.data[j + 2] = 0
 		}
 	}
 

@@ -20,10 +20,10 @@
 	function init() {
 		gl = canvas.getContext('2d')
 		gl.rect(0, 0, width, height)
-		gl.fillStyle = 'white'
+		gl.fillStyle = 'black'
 		gl.fill()
 
-		gl.strokeStyle = 'black'
+		gl.strokeStyle = 'white'
 
 		draw()
 	}
