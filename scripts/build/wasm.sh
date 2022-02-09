@@ -3,13 +3,13 @@
 # optimization
 O='-O3'
 
-# -s MALLOC=emmalloc
 PARAMS="$O mandelbrot.cpp -o mandelbrot.js
 -s NO_EXIT_RUNTIME=1
 -s EXPORTED_RUNTIME_METHODS=ccall,cwrap,getValue
 -s EXPORTED_FUNCTIONS=_calcPlane,_malloc,_free
 -s ALLOW_MEMORY_GROWTH=1
 -s EXPORT_ES6=1
+-s MALLOC=emmalloc
 -s MODULARIZE=1
 -s ENVIRONMENT=web
 -ffast-math
