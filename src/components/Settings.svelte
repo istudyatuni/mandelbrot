@@ -38,8 +38,8 @@
 		<a
 			href="//github.com/istudyatuni/mandelbrot"
 			class="flex float-right mt-5 text-sky-600 hover:text-sky-800">
-			<span>Github</span>
-			<img src="assets/icons/github.svg" alt="" class="ml-1" />
+			<span>GitHub</span>
+			<img src="assets/icons/github.svg" alt="" class="ml-2" />
 		</a>
 	{:else}
 		<Button on:click={toggleShow}>Show settings</Button>
