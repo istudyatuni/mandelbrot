@@ -25,6 +25,29 @@ extern "C" {
 }
 #endif
 
+#ifdef __EMSCRIPTEN__
+EMSCRIPTEN_KEEPALIVE
+#endif
+bool checkCardioid(double x, double i) {
+	double a4 = x - 0.25,
+		b2 = i * i;
+	double q = a4 * a4 + b2;
+
+	// cardioid
+	if (q * (q + a4) < b2 * 0.25) {
+		return true;
+	}
+
+	double x1 = x + 1;
+
+	// circle to the left of cardioid
+	if (x1 * x1 + b2 < 1/16) {
+		return true;
+	}
+
+	return false;
+}
+
 const int R = 2, N = 100;
 const complex<double> z0 = 0;
 
@@ -32,6 +55,10 @@ const complex<double> z0 = 0;
 EMSCRIPTEN_KEEPALIVE
 #endif
 unsigned short checkSeries(double x, double i) {
+	if (checkCardioid(x, i)) {
+		return 1;
+	}
+
 	complex<double> point = complex<double>(x, i);
 	complex<double> num = z0 + point;
 
