@@ -1,23 +1,26 @@
-/**
- * #ifdef __EMSCRIPTEN__ for building with emsdk
- * #ifndef __EMSCRIPTEN__ for local testing
- */
+#ifdef __EMSCRIPTEN__
+	// building with emsdk
+	#define PROD_BUILD
+#else
+	// local testing
+	#define DEV_BUILD
+#endif
 
-#ifndef __EMSCRIPTEN__
+#ifdef DEV_BUILD
 #include <iostream>
 using std::cout;
 #endif
 
 #include <complex>
 
-#ifdef __EMSCRIPTEN__
+#ifdef PROD_BUILD
 #include <emscripten/emscripten.h>
 #endif
 
 using std::complex;
 // using namespace std::complex_literals;
 
-#ifdef __EMSCRIPTEN__
+#ifdef PROD_BUILD
 // for export with emscripten
 // https://stackoverflow.com/a/63879243
 extern "C" {
@@ -25,7 +28,7 @@ extern "C" {
 }
 #endif
 
-#ifdef __EMSCRIPTEN__
+#ifdef PROD_BUILD
 EMSCRIPTEN_KEEPALIVE
 #endif
 bool checkCardioid(double x, double i) {
@@ -51,7 +54,7 @@ bool checkCardioid(double x, double i) {
 const int R = 2, N = 100;
 const complex<double> z0 = 0;
 
-#ifdef __EMSCRIPTEN__
+#ifdef PROD_BUILD
 EMSCRIPTEN_KEEPALIVE
 #endif
 unsigned short checkSeries(double x, double i) {
@@ -95,7 +98,7 @@ unsigned short checkSeries(double x, double i) {
  * @param  height Height of display (canvas plane)
  * @return        Array with result
  */
-#ifdef __EMSCRIPTEN__
+#ifdef PROD_BUILD
 EMSCRIPTEN_KEEPALIVE
 #endif
 void calcPlane(double lx, double rx, int width, int height, unsigned short* result) {
@@ -122,7 +125,7 @@ void calcPlane(double lx, double rx, int width, int height, unsigned short* resu
 	}
 }
 
-#ifndef __EMSCRIPTEN__
+#ifdef DEV_BUILD
 int main() {
 	int width = 1600, height = 717;
 	// left and right x coord
