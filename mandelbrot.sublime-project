@@ -4,5 +4,11 @@
 		{
 			"path": "."
 		}
+	],
+	"build_systems": [
+		{
+			"name": "Build wasm",
+			"shell_cmd": "yarn build:wasm"
+		}
 	]
 }
