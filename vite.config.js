@@ -1,22 +1,14 @@
 import postcss from './postcss.config.js'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import wasm from 'vite-plugin-wasm'
 
 import path from 'path'
-
-/**
- * @return {import('vite').ProxyOptions}
- */
-/*const singleProxy = (path, port) => ({
-	target: 'http://localhost:' + port,
-	changeOrigin: true,
-	rewrite: (url) => url.replace(new RegExp(`^/${path}`), ''),
-})*/
 
 /**
  * @type {import('vite').UserConfig}
  */
 const config = {
-	plugins: [svelte()],
+	plugins: [svelte(), wasm()],
 	css: { postcss },
 	resolve: {
 		alias: {
@@ -29,9 +21,6 @@ const config = {
 	clearScreen: false,
 	server: {
 		port: 8080,
-		proxy: {
-			// '/api': singleProxy('api', 4000),
-		},
 	},
 	build: {
 		sourcemap: true,

@@ -6,12 +6,14 @@
     "build:wasm": "./scripts/build/wasm.sh",
     "test": "jest",
     "prepare": "husky install .husky",
-    "format": "redrun format:eslint format:prettier",
-    "format:eslint": "eslint --fix --ext .js --ext .svelte .",
-    "format:prettier": "prettier --write --plugin-search-dir=. './**/*.{js,svelte}'",
-    "format:check": "redrun format:check:eslint format:check:prettier",
+    "format": "redrun format:run:*",
+    "format:run:eslint": "eslint --fix --ext .js --ext .svelte .",
+    "format:run:prettier": "prettier --write --plugin-search-dir=. './**/*.{js,svelte}'",
+    "format:run:rust": "cd wasm && cargo fmt",
+    "format:check": "redrun format:check:*",
     "format:check:eslint": "eslint --ext .js --ext .svelte .",
-    "format:check:prettier": "prettier --check --plugin-search-dir=. './**/*.{js,svelte}'"
+    "format:check:prettier": "prettier --check --plugin-search-dir=. './**/*.{js,svelte}'",
+    "format:check:rust": "cd wasm && cargo fmt --check"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.37",
@@ -35,6 +37,7 @@
     "svelte-preprocess": "^4.10.3",
     "svelte-storages": "^0.0.2",
     "tailwindcss": "^3.0.18",
-    "vite": "^2.8.4"
+    "vite": "^2.8.4",
+    "vite-plugin-wasm": "^0.0.2"
   }
 }

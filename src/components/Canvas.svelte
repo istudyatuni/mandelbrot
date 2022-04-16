@@ -68,6 +68,12 @@
 		drawLine(0, xpix, width, xpix)
 	}
 
+	/**
+	 * @param  {Number} sx Start `x`
+	 * @param  {Number} sy Start `y`
+	 * @param  {Number} ex End `x`
+	 * @param  {Number} ey End `y`
+	 */
 	function drawLine(sx, sy, ex, ey) {
 		gl.beginPath()
 		gl.moveTo(sx, sy)

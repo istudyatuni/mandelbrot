@@ -1,64 +1,35 @@
-import { default as MandelbrotModule } from 'src/wasm/mandelbrot.js'
+import { Mandelbrot } from 'src/wasm'
+import { memory } from 'src/wasm/mandelbrot_wasm_bg.wasm'
 
-let Module
-let calcPlane
-
-let ModulePromise = MandelbrotModule()
-
-// https://stackoverflow.com/a/53384917
-function init(mod) {
-	Module = mod
-	calcPlane = mod.cwrap('calcPlane', null, [
-		'number',
-		'number',
-		'number',
-		'number',
-		'array',
-	])
-}
+/** @type {Mandelbrot} */
+let mandelbrot = null
 
 /**
  * Draw mandelbrot on image
  *
  * @param  {ImageData}          image Image from canvas
  * @param  {number}             lx    Left x of complex plane
- * @param  {number}             rx    Right x of compmlex plane
+ * @param  {number}             rx    Right x of complex plane
  * @return {Promise<ImageData>}       Promise with resulting image
  */
-export async function drawMandelbrot(image, lx, rx) {
-	if (ModulePromise !== null) {
-		init(await ModulePromise)
-
-		ModulePromise = null
-	}
-
+export function drawMandelbrot(image, lx, rx) {
 	let w = image.width,
 		h = image.height
-
 	const len = w * h
 
-	// Work with arrays
-	// https://stackoverflow.com/a/23917034
-	// https://stackoverflow.com/a/41878939
-	// https://emscripten.org/docs/api_reference/preamble.js.html#getValue
-	let buffer = Module._malloc(len)
-	Module.HEAP16.set(new Uint16Array(Array(len)).buffer)
-
-	calcPlane(lx, rx, w, h, buffer)
-
-	let result = []
-	for (let i = 0; i < len; i++) {
-		// I don't know why, maybe it depends on type of array elements
-		// but multiply i by 2 helps to get right array from wasm
-		result.push(Module.getValue(buffer + i * 2))
+	if (mandelbrot === null) {
+		mandelbrot = Mandelbrot.new(len)
 	}
 
-	Module._free(buffer)
+	mandelbrot.calc(lx, rx, w, h, len)
+
+	const pixelsPtr = mandelbrot.pixels()
+	const pixels = new Uint8Array(memory.buffer, pixelsPtr, len)
 
 	let color
 
 	for (let i = 0, j = 0; i < len; i++, j += 4) {
-		color = result[i] * 255
+		color = pixels[i]
 
 		image.data[j] = color
 		image.data[j + 1] = color

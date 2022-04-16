@@ -7,7 +7,10 @@
 	let width, height
 </script>
 
-<svelte:window bind:innerWidth={width} bind:innerHeight={height} />
+<svelte:window
+	bind:innerWidth={width}
+	bind:innerHeight={height}
+	on:resize={() => window.location.reload()} />
 
 <Settings />
 
