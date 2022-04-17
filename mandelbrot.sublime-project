@@ -2,7 +2,14 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": ".",
+			"folder_exclude_patterns": [/*"//src",*/ "//wasm"]
+		},
+		// {
+		// 	"path": "src"
+		// },
+		{
+			"path": "wasm"
 		}
 	],
 	"build_systems": [

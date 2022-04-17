@@ -1,5 +1,7 @@
 import postcss from './postcss.config.js'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+
+// for importing from *.wasm files
 import wasm from 'vite-plugin-wasm'
 
 import path from 'path'
