@@ -65,8 +65,8 @@ impl Mandelbrot {
         let (mut xd, mut yd);
 
         for i in 0..len {
-            xd = ((i as u16) % w) as f64;
-            yd = ((i as u16) / w) as f64;
+            xd = (i % w as usize) as f64;
+            yd = (i / w as usize) as f64;
             self.pixels[i] = check_series(lx + xd / scale, ty - yd / scale);
         }
     }
