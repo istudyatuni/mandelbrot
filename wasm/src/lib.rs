@@ -75,10 +75,6 @@ impl Mandelbrot {
         self.pixels.as_ptr()
     }
 
-    /*pub fn stats(&self) -> usize {
-        self.pixels.iter().filter(|p| **p == IS_IN).count()
-    }*/
-
     pub fn scale2x() {
         unimplemented!();
     }

@@ -30,7 +30,7 @@ const config = {
 		outDir: 'build',
 		target: 'esnext',
 	},
-	base: '/mandelbrot',
+	base: '/mandelbrot/',
 }
 
 export default config
