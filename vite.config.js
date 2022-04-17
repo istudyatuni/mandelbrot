@@ -28,8 +28,9 @@ const config = {
 		sourcemap: true,
 		minify: true,
 		outDir: 'build',
+		target: 'esnext',
 	},
-	// base: '/',
+	base: '/mandelbrot',
 }
 
 export default config
