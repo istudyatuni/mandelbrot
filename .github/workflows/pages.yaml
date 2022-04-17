@@ -8,22 +8,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Setup emsdk
-        uses: mymindstorm/setup-emsdk@v11
+      - uses: actions-rs/toolchain@v1
         with:
-          version: 3.1.3
-          # This is the name of the cache folder.
-          # The cache folder will be placed in the build directory,
-          #  so make sure it doesn't conflict with anything!
-          actions-cache-folder: 'emsdk-cache'
-      - name: Verify emsdk
-        run: emcc -v
+          profile: minimal
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v1
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
       - name: Build WASM
         run: ./scripts/build/wasm.sh
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'yarn'
@@ -34,9 +32,6 @@ jobs:
 
           cd build
           touch .nojekyll
-
-          cd dist/wasm
-          rm *.{sh,cpp}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.2
