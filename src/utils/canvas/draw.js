@@ -4,13 +4,15 @@ import { memory } from 'src/wasm/mandelbrot_wasm_bg.wasm'
 /** @type {Mandelbrot} */
 let mandelbrot = null
 
+const IS_IN = 0
+
 /**
  * Draw mandelbrot on image
  *
  * @param  {ImageData}          image Image from canvas
  * @param  {number}             lx    Left x of complex plane
  * @param  {number}             rx    Right x of complex plane
- * @return {Promise<ImageData>}       Promise with resulting image
+ * @return {ImageData}       Promise with resulting image
  */
 export function drawMandelbrot(image, lx, rx) {
 	let w = image.width,
@@ -31,9 +33,15 @@ export function drawMandelbrot(image, lx, rx) {
 	for (let i = 0, j = 0; i < len; i++, j += 4) {
 		color = pixels[i]
 
-		image.data[j] = color
-		image.data[j + 1] = color
-		image.data[j + 2] = color
+		if (color === IS_IN) {
+			image.data[j] = IS_IN
+			image.data[j + 1] = IS_IN
+			image.data[j + 2] = IS_IN
+		} else {
+			image.data[j] = color / 255
+			image.data[j + 1] = 255 - color
+			image.data[j + 2] = color % 255
+		}
 	}
 
 	return image

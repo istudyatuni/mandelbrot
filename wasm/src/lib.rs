@@ -14,7 +14,7 @@ const N: i16 = 100;
 /// complex zero
 const Z0: Complex<f64> = Complex::new(0.0, 0.0);
 
-const IS_IN: u8 = 255;
+const IS_IN: u8 = 0;
 
 #[wasm_bindgen]
 impl Mandelbrot {
@@ -89,7 +89,7 @@ fn check_series(x: f64, i: f64) -> u8 {
 
     for i in 0..N {
         if num.norm() >= R as f64 {
-            return i as u8;
+            return (N - i) as u8;
         }
 
         num = num.powu(2) + point;

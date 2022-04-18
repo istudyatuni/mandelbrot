@@ -1,6 +1,8 @@
 <script context="module">
 	import Canvas from 'src/components/Canvas.svelte'
 	import Settings from 'src/components/Settings.svelte'
+
+	import { refresh } from 'src/stores/refresh'
 </script>
 
 <script>
@@ -10,7 +12,7 @@
 <svelte:window
 	bind:innerWidth={width}
 	bind:innerHeight={height}
-	on:resize={() => window.location.reload()} />
+	on:resize={() => refresh.set(true)} />
 
 <Settings />
 

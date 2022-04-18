@@ -3,20 +3,7 @@
 	import InputNumber from 'src/components/atoms/InputNumber.svelte'
 
 	import { settings } from 'src/stores/draw'
-	import { wasm } from 'src/stores/load'
-
-	function getLoadText(state) {
-		/* eslint-disable indent */
-		switch (state) {
-			case 'load':
-			case 'calc':
-				return 'Loading'
-			case 'fail':
-				return 'Fail'
-			default:
-				return 'Refresh'
-		}
-	}
+	import { refresh } from 'src/stores/refresh'
 </script>
 
 <script>
@@ -31,14 +18,12 @@
 	{#if show}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Hide</Button>
-			<Button
-				on:click={() => window.location.reload()}
-				danger={$wasm === 'fail'}>
-				{getLoadText($wasm)}
-			</Button>
+			<div class:hidden={$refresh === false}>
+				<Button on:click={() => window.location.reload()}>Refresh</Button>
+			</div>
 		</div>
 
-		<div class="flex">
+		<div class="flex mb-2">
 			<p>x: [</p>
 			<InputNumber bind:value={$settings.lx} />
 			<p>;</p>
@@ -46,11 +31,16 @@
 			<p>]</p>
 		</div>
 
+		<div class="flex">
+			<p>y:</p>
+			<InputNumber bind:value={$settings.yc} />
+		</div>
+
 		<a
 			href="//github.com/istudyatuni/mandelbrot"
-			class="flex float-right mt-5 text-sky-600 hover:text-sky-800">
-			<span>GitHub</span>
-			<img src="assets/icons/github.svg" alt="" class="ml-2" />
+			class="flex mt-5 text-sky-600 hover:text-sky-800">
+			<img src="assets/icons/github.svg" alt="" class="mr-2" />
+			<span class="pt-1">GitHub</span>
 		</a>
 	{:else}
 		<Button on:click={toggleShow}>Show settings</Button>
