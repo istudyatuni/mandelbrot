@@ -18,9 +18,9 @@
 	{#if show}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Hide</Button>
-			<div class:hidden={$refresh === false}>
-				<Button on:click={() => window.location.reload()}>Refresh</Button>
-			</div>
+			<Button on:click={() => window.location.reload()} disabled={!$refresh}>
+				Refresh
+			</Button>
 		</div>
 
 		<div class="flex mb-2">
