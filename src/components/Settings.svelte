@@ -15,6 +15,12 @@
 	function should_refresh() {
 		refresh.set(true)
 	}
+	function reset() {
+		settings.set('lx', -3)
+		settings.set('rx', 1)
+		settings.set('yc', 0)
+		should_refresh()
+	}
 </script>
 
 <div class="absolute rounded bg-gray-200 m-5 select-none" class:p-2={show}>
@@ -38,6 +44,8 @@
 			<p>y:</p>
 			<InputNumber bind:value={$settings.yc} on:change={should_refresh} />
 		</div>
+
+		<Button on:click={reset} class="mt-2">Reset</Button>
 
 		<a
 			href="//github.com/istudyatuni/mandelbrot"
