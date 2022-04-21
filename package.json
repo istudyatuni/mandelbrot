@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:wasm": "./scripts/build/wasm.sh",
+    "build:wasm": "./scripts/build-wasm.sh",
     "test": "jest",
     "prepare": "husky install .husky",
     "format": "redrun format:run:*",

@@ -12,7 +12,7 @@ const IS_IN = 0
  * @param  {ImageData}          image Image from canvas
  * @param  {number}             lx    Left x of complex plane
  * @param  {number}             rx    Right x of complex plane
- * @return {ImageData}       Promise with resulting image
+ * @return {ImageData}                Resulting image
  */
 export function drawMandelbrot(image, lx, rx) {
 	let w = image.width,
@@ -20,6 +20,7 @@ export function drawMandelbrot(image, lx, rx) {
 	const len = w * h
 
 	if (mandelbrot === null) {
+		// init struct object
 		mandelbrot = Mandelbrot.new(len)
 	}
 

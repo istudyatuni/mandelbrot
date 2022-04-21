@@ -15,7 +15,7 @@ cargo install wasm-pack
 Build:
 
 ```bash
-./scripts/build/wasm.sh
+./scripts/build-wasm.sh
 # or
 yarn build:wasm
 ```

@@ -3,7 +3,7 @@
 
 	import { settings } from 'src/stores/draw'
 
-	import { drawMandelbrot } from 'src/utils/canvas/draw'
+	import { drawMandelbrot } from 'src/utils/draw'
 </script>
 
 <script>
@@ -25,7 +25,7 @@
 		draw()
 	}
 
-	async function draw() {
+	function draw() {
 		field = gl.getImageData(0, 0, width, height)
 		field = drawMandelbrot(field, $settings.lx, $settings.rx)
 		gl.putImageData(field, 0, 0)

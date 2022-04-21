@@ -3,7 +3,7 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Mandelbrot {
-    /// color of pixel, for now 0 and 255
+    /// colors of pixels, for now 0 and 255
     pixels: Vec<u8>,
 }
 
