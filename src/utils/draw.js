@@ -27,21 +27,21 @@ export function drawMandelbrot(image, lx, rx) {
 	mandelbrot.calc(lx, rx, w, h, len)
 
 	const pixelsPtr = mandelbrot.pixels()
-	const pixels = new Uint8Array(memory.buffer, pixelsPtr, len)
+	const pixels = new Float32Array(memory.buffer, pixelsPtr, len)
 
 	let color
 
 	for (let i = 0, j = 0; i < len; i++, j += 4) {
-		color = pixels[i]
+		color = pixels[i] * 360
 
 		if (color === IS_IN) {
 			image.data[j] = IS_IN
 			image.data[j + 1] = IS_IN
 			image.data[j + 2] = IS_IN
 		} else {
-			image.data[j] = color / 255
-			image.data[j + 1] = 255 - color
-			image.data[j + 2] = color % 255
+			image.data[j] = color
+			image.data[j + 1] = color
+			image.data[j + 2] = color
 		}
 	}
 
