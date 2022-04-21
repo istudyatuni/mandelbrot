@@ -8,8 +8,6 @@ import { settings } from 'src/stores/draw'
 /** @type {Mandelbrot} */
 let mandelbrot = null
 
-const IS_IN = 0
-
 /**
  * Draw mandelbrot on image
  *
@@ -37,15 +35,9 @@ export function drawMandelbrot(image) {
 	for (let i = 0, j = 0; i < len; i++, j += 4) {
 		color = pixels[i] * 360
 
-		if (color === IS_IN) {
-			image.data[j] = IS_IN
-			image.data[j + 1] = IS_IN
-			image.data[j + 2] = IS_IN
-		} else {
-			image.data[j] = color
-			image.data[j + 1] = color
-			image.data[j + 2] = color
-		}
+		image.data[j] = color
+		image.data[j + 1] = color
+		image.data[j + 2] = color
 	}
 
 	return image
