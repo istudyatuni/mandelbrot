@@ -45,22 +45,21 @@ impl Mandelbrot {
     ///
     /// * `lx` - Left coordinate of x axis (complex plane)
     /// * `rx` - Right coordinate of x axis (complex plane)
+    /// * `yc` - Center of y axis (complex plane)
     /// * `w` - Width of display (canvas plane) - how many points to calculate
     /// * `h` - Height of display (canvas plane)
-    pub fn calc(&mut self, lx: f64, rx: f64, w: u16, h: u16) {
+    pub fn calc(&mut self, lx: f64, rx: f64, yc: f64, w: u16, h: u16) {
         // total width of x axis (complex plane)
         let xwidth = rx - lx;
 
         // scale coefficient between complex plane and canvas
         let scale = (w as f64) / xwidth;
 
-        // height of y axis
+        // complex height of y axis
         let yheight = (h as f64) / scale;
 
-        // top and down y coordinate
-        // now hardcode, y axis on canvas center
-        let ty = yheight / (2 as f64);
-        // let dy = ty;
+        // top complex y coordinate
+        let ty = yc + (yheight / 2.0);
 
         // x display, y display
         let (mut xd, mut yd);
@@ -74,10 +73,6 @@ impl Mandelbrot {
 
     pub fn pixels(&self) -> *const f32 {
         self.pixels.as_ptr()
-    }
-
-    pub fn scale2x() {
-        unimplemented!();
     }
 }
 

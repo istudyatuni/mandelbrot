@@ -27,7 +27,7 @@ export function drawMandelbrot(image) {
 	}
 
 	const set = get(settings)
-	mandelbrot.calc(set.lx, set.rx, w, h)
+	mandelbrot.calc(set.lx, set.rx, set.yc, w, h)
 
 	const pixelsPtr = mandelbrot.pixels()
 	const pixels = new Float32Array(memory.buffer, pixelsPtr, len)
