@@ -1,8 +1,6 @@
 <script context="module">
 	import { onMount } from 'svelte'
 
-	import { settings } from 'src/stores/draw'
-
 	import { drawMandelbrot } from 'src/utils/draw'
 </script>
 
@@ -27,7 +25,7 @@
 
 	function draw() {
 		field = gl.getImageData(0, 0, width, height)
-		field = drawMandelbrot(field, $settings.lx, $settings.rx)
+		field = drawMandelbrot(field)
 		gl.putImageData(field, 0, 0)
 	}
 

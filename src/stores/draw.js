@@ -1,7 +1,9 @@
 import { sessionStore } from 'svelte-storages'
 
 /**
- * left `x`, right `x`, `y` center
+ * - `lx`: left x of complex plane
+ * - `rx`: right x of complex plane
+ * - `yc`: center y of complex plane
  */
 export const settings = sessionStore('draw-settings', {
 	lx: -3,

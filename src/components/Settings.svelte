@@ -12,6 +12,9 @@
 	function toggleShow() {
 		show = !show
 	}
+	function should_refresh() {
+		refresh.set(true)
+	}
 </script>
 
 <div class="absolute rounded bg-gray-200 m-5 select-none" class:p-2={show}>
@@ -25,15 +28,15 @@
 
 		<div class="flex mb-2">
 			<p>x: [</p>
-			<InputNumber bind:value={$settings.lx} />
+			<InputNumber bind:value={$settings.lx} on:change={should_refresh} />
 			<p>;</p>
-			<InputNumber bind:value={$settings.rx} />
+			<InputNumber bind:value={$settings.rx} on:change={should_refresh} />
 			<p>]</p>
 		</div>
 
 		<div class="flex">
 			<p>y:</p>
-			<InputNumber bind:value={$settings.yc} />
+			<InputNumber bind:value={$settings.yc} on:change={should_refresh} />
 		</div>
 
 		<a
