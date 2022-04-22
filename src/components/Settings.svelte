@@ -2,7 +2,7 @@
 	import Button from 'src/components/atoms/Button.svelte'
 	import InputNumber from 'src/components/atoms/InputNumber.svelte'
 
-	import { settings } from 'src/stores/draw'
+	import { draw as drawStore } from 'src/stores/settings'
 	import { refresh } from 'src/stores/refresh'
 </script>
 
@@ -16,9 +16,9 @@
 		refresh.set(true)
 	}
 	function reset() {
-		settings.set('lx', -3)
-		settings.set('rx', 1)
-		settings.set('yc', 0)
+		drawStore.set('lx', -3)
+		drawStore.set('rx', 1)
+		drawStore.set('yc', 0)
 		should_refresh()
 	}
 </script>
@@ -34,15 +34,15 @@
 
 		<div class="flex mb-2">
 			<p>x: [</p>
-			<InputNumber bind:value={$settings.lx} on:change={should_refresh} />
+			<InputNumber bind:value={$drawStore.lx} on:change={should_refresh} />
 			<p>;</p>
-			<InputNumber bind:value={$settings.rx} on:change={should_refresh} />
+			<InputNumber bind:value={$drawStore.rx} on:change={should_refresh} />
 			<p>]</p>
 		</div>
 
 		<div class="flex">
 			<p>y:</p>
-			<InputNumber bind:value={$settings.yc} on:change={should_refresh} />
+			<InputNumber bind:value={$drawStore.yc} on:change={should_refresh} />
 		</div>
 
 		<Button on:click={reset} class="mt-2">Reset</Button>

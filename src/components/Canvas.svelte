@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte'
 	import { get } from 'svelte/store'
 
-	import { settings } from 'src/stores/draw'
+	import { draw as drawStore } from 'src/stores/settings'
 	import { scaleCoordinates } from 'src/utils/coordinates'
 	import { drawMandelbrot } from 'src/utils/draw'
 </script>
@@ -37,12 +37,12 @@
 	 * @param {PointerEvent} e
 	 */
 	function scaleDraw(e) {
-		const st = get(settings)
+		const st = get(drawStore)
 		let coords = scaleCoordinates(st, width, height, e.clientX, e.clientY)
 
-		settings.set('lx', coords.lx)
-		settings.set('rx', coords.rx)
-		settings.set('yc', coords.yc)
+		drawStore.set('lx', coords.lx)
+		drawStore.set('rx', coords.rx)
+		drawStore.set('yc', coords.yc)
 
 		draw()
 	}

@@ -3,7 +3,7 @@ import { get } from 'svelte/store'
 import { Mandelbrot } from 'src/wasm'
 import { memory } from 'src/wasm/mandelbrot_wasm_bg.wasm'
 
-import { settings } from 'src/stores/draw'
+import { draw as drawStore } from 'src/stores/settings'
 
 /** @type {Mandelbrot} */
 let mandelbrot = null
@@ -24,7 +24,7 @@ export function drawMandelbrot(image) {
 		mandelbrot = Mandelbrot.new(len)
 	}
 
-	const set = get(settings)
+	const set = get(drawStore)
 	mandelbrot.calc(set.lx, set.rx, set.yc, w, h)
 
 	const pixelsPtr = mandelbrot.pixels()

@@ -5,7 +5,7 @@ import { sessionStore } from 'svelte-storages'
  * - `rx`: right x of complex plane
  * - `yc`: center y of complex plane
  */
-export const settings = sessionStore('draw-settings', {
+export const draw = sessionStore('draw-settings', {
 	lx: -3,
 	rx: 1,
 	yc: 0,
