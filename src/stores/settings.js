@@ -10,3 +10,7 @@ export const draw = sessionStore('draw-settings', {
 	rx: 1,
 	yc: 0,
 })
+
+export const settings = sessionStore('settings', {
+	show_settings: true,
+})

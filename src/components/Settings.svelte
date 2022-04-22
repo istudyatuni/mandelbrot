@@ -2,15 +2,13 @@
 	import Button from 'src/components/atoms/Button.svelte'
 	import InputNumber from 'src/components/atoms/InputNumber.svelte'
 
-	import { draw as drawStore } from 'src/stores/settings'
+	import { draw as drawStore, settings } from 'src/stores/settings'
 	import { refresh } from 'src/stores/refresh'
 </script>
 
 <script>
-	let show = true
-
 	function toggleShow() {
-		show = !show
+		settings.set('show_settings', !$settings.show_settings)
 	}
 	function should_refresh() {
 		refresh.set(true)
@@ -23,8 +21,10 @@
 	}
 </script>
 
-<div class="absolute rounded bg-gray-200 m-5 select-none" class:p-2={show}>
-	{#if show}
+<div
+	class="absolute rounded bg-gray-200 m-5 select-none"
+	class:p-2={$settings.show_settings}>
+	{#if $settings.show_settings}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Hide</Button>
 			<Button on:click={() => window.location.reload()} disabled={!$refresh}>
