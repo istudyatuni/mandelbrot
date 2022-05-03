@@ -20,7 +20,6 @@
 	function init() {
 		gl = canvas.getContext('2d')
 		gl.rect(0, 0, width, height)
-		gl.fillStyle = 'black'
 		gl.fill()
 
 		draw()
