@@ -8,10 +8,9 @@ pub struct Mandelbrot {
     pixels_count: usize,
 }
 
-/// modulo
-const R: f64 = 2.0;
+const ESCAPE_MODULUS: f64 = 2.0;
 /// number of iterations
-const N: u16 = 100;
+const DEPTH: u16 = 100;
 /// complex zero
 const Z0: Complex<f64> = Complex::new(0.0, 0.0);
 
@@ -84,10 +83,10 @@ fn check_series(x: f64, i: f64) -> f32 {
     let point = Complex::new(x, i);
     let mut num = Z0 + point;
 
-    for step in 0..N {
-        if num.norm() >= R {
+    for step in 0..DEPTH {
+        if num.norm() >= ESCAPE_MODULUS {
             // calculate percent of step
-            return step as f32 / N as f32;
+            return step as f32 / DEPTH as f32;
         }
 
         num = num.powu(2) + point;
