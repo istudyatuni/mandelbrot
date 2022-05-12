@@ -3,8 +3,7 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Mandelbrot {
-    /// colors of pixels, for now 0 and 255
-    pixels: Vec<f32>,
+    pixel_colors: Vec<u16>,
     pixels_count: usize,
 }
 
@@ -14,13 +13,13 @@ const DEPTH: u16 = 100;
 /// complex zero
 const Z0: Complex<f64> = Complex::new(0.0, 0.0);
 
-const IS_IN: f32 = 0.0;
+const IS_IN: u16 = 0;
 
 #[wasm_bindgen]
 impl Mandelbrot {
     pub fn new(pixels_count: usize) -> Self {
         Self {
-            pixels: vec![0.0; pixels_count],
+            pixel_colors: vec![0; pixels_count],
             pixels_count,
         }
     }
@@ -66,16 +65,16 @@ impl Mandelbrot {
         for i in 0..self.pixels_count {
             xd = (i % w as usize) as f64;
             yd = (i / w as usize) as f64;
-            self.pixels[i] = check_series(lx + xd / scale, ty - yd / scale);
+            self.pixel_colors[i] = check_series(lx + xd / scale, ty - yd / scale);
         }
     }
 
-    pub fn pixels(&self) -> *const f32 {
-        self.pixels.as_ptr()
+    pub fn pixel_colors(&self) -> *const u16 {
+        self.pixel_colors.as_ptr()
     }
 }
 
-fn check_series(x: f64, i: f64) -> f32 {
+fn check_series(x: f64, i: f64) -> u16 {
     if check_cardioid(x, i) {
         return IS_IN;
     }
@@ -85,8 +84,7 @@ fn check_series(x: f64, i: f64) -> f32 {
 
     for step in 0..DEPTH {
         if num.norm() >= ESCAPE_MODULUS {
-            // calculate percent of step
-            return step as f32 / DEPTH as f32;
+            return step;
         }
 
         num = num.powu(2) + point;
