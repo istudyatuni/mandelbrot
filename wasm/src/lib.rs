@@ -3,7 +3,7 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Mandelbrot {
-    pixel_colors: Vec<u16>,
+    pixel_steps: Vec<u16>,
     pixels_count: usize,
 }
 
@@ -19,7 +19,7 @@ const IS_IN: u16 = 0;
 impl Mandelbrot {
     pub fn new(pixels_count: usize) -> Self {
         Self {
-            pixel_colors: vec![0; pixels_count],
+            pixel_steps: vec![0; pixels_count],
             pixels_count,
         }
     }
@@ -65,12 +65,12 @@ impl Mandelbrot {
         for i in 0..self.pixels_count {
             xd = (i % w as usize) as f64;
             yd = (i / w as usize) as f64;
-            self.pixel_colors[i] = check_series(lx + xd / scale, ty - yd / scale);
+            self.pixel_steps[i] = check_series(lx + xd / scale, ty - yd / scale);
         }
     }
 
-    pub fn pixel_colors(&self) -> *const u16 {
-        self.pixel_colors.as_ptr()
+    pub fn pixel_steps(&self) -> *const u16 {
+        self.pixel_steps.as_ptr()
     }
 }
 
