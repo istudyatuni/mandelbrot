@@ -3,11 +3,8 @@
 	[
 		{
 			"path": ".",
-			"folder_exclude_patterns": [/*"//src",*/ "//wasm"]
+			"folder_exclude_patterns": ["//wasm"]
 		},
-		// {
-		// 	"path": "src"
-		// },
 		{
 			"path": "wasm"
 		}
