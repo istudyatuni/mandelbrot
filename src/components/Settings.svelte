@@ -90,9 +90,10 @@
 
 		<div class="mb-2">
 			<p>
-				Magnification depth: {magnification_depth}
-				<Button on:click={decrease_depth} class="py-0.5">-</Button>
-				<Button on:click={increase_depth} class="py-0.5">+</Button>
+				Magnification depth:
+				<Button on:click={decrease_depth} class="mr-1">-</Button>
+				{magnification_depth}
+				<Button on:click={increase_depth} class="ml-1">+</Button>
 			</p>
 		</div>
 
