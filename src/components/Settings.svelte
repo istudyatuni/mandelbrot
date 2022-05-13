@@ -8,7 +8,7 @@
 		setHash,
 		resetHash,
 	} from 'src/stores/settings'
-	import { refresh as refreshStore } from 'src/stores/refresh'
+	import { redraw as redrawStore } from 'src/stores/refresh'
 
 	import { drawMandelbrot } from 'src/utils/draw'
 	import { MAPS } from 'src/utils/maps'
@@ -28,23 +28,23 @@
 		let half_width = xwidth / 2
 		drawStore.set('lx', $drawStore.lx - half_width)
 		drawStore.set('rx', $drawStore.rx + half_width)
-		should_refresh()
+		should_redraw()
 	}
 	function increase_depth() {
 		let quart_width = xwidth / 4
 		drawStore.set('lx', $drawStore.lx + quart_width)
 		drawStore.set('rx', $drawStore.rx - quart_width)
-		should_refresh()
+		should_redraw()
 	}
-	function should_refresh() {
-		refreshStore.set(true)
+	function should_redraw() {
+		redrawStore.set(true)
 	}
 	function reset() {
 		drawStore.set('lx', -3)
 		drawStore.set('rx', 1)
 		drawStore.set('yc', 0)
 		resetHash()
-		should_refresh()
+		should_redraw()
 	}
 </script>
 
@@ -54,9 +54,7 @@
 	{#if $settings.show_settings}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Collapse</Button>
-			<Button on:click={drawMandelbrot} disabled={!$refreshStore}>
-				Redraw
-			</Button>
+			<Button on:click={drawMandelbrot} disabled={!$redrawStore}>Redraw</Button>
 		</div>
 
 		<div class="mb-2">
@@ -70,12 +68,12 @@
 			<p>x: [</p>
 			<InputNumber
 				bind:value={$drawStore.lx}
-				on:change={should_refresh}
+				on:change={should_redraw}
 				wider={$settings.wider_inputs} />
 			<p>;</p>
 			<InputNumber
 				bind:value={$drawStore.rx}
-				on:change={should_refresh}
+				on:change={should_redraw}
 				wider={$settings.wider_inputs} />
 			<p>]</p>
 		</div>
@@ -84,7 +82,7 @@
 			<p>y:</p>
 			<InputNumber
 				bind:value={$drawStore.yc}
-				on:change={should_refresh}
+				on:change={should_redraw}
 				wider={$settings.wider_inputs} />
 		</div>
 
@@ -102,7 +100,7 @@
 			<select
 				class="p-1 rounded capitalize"
 				bind:value={$settings.palette}
-				on:change={should_refresh}>
+				on:change={should_redraw}>
 				{#each Object.entries(MAPS) as [key, map]}
 					<option value={key}>{map.name}</option>
 				{/each}

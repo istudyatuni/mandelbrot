@@ -4,7 +4,7 @@ import { Mandelbrot } from 'src/wasm'
 import { memory } from 'src/wasm/mandelbrot_wasm_bg.wasm'
 
 import { load_palette } from 'src/utils/maps'
-import { refresh as refreshStore } from 'src/stores/refresh'
+import { redraw as redrawStore } from 'src/stores/refresh'
 import { draw as drawStore, settings } from 'src/stores/settings'
 
 const DEPTH = 256
@@ -66,5 +66,5 @@ export function drawMandelbrot() {
 	}
 
 	gl.putImageData(image, 0, 0)
-	refreshStore.set(false)
+	redrawStore.set(false)
 }
