@@ -2,7 +2,12 @@
 	import Button from 'src/components/atoms/Button.svelte'
 	import InputNumber from 'src/components/atoms/InputNumber.svelte'
 
-	import { draw as drawStore, settings } from 'src/stores/settings'
+	import {
+		draw as drawStore,
+		settings,
+		setHash,
+		resetHash,
+	} from 'src/stores/settings'
 	import { refresh } from 'src/stores/refresh'
 
 	import { MAPS } from 'src/utils/maps'
@@ -20,7 +25,7 @@
 		drawStore.set('rx', 1)
 		drawStore.set('yc', 0)
 		drawStore.set('depth', 0)
-		should_refresh()
+		resetHash()
 	}
 </script>
 
@@ -29,7 +34,7 @@
 	class:p-2={$settings.show_settings}>
 	{#if $settings.show_settings}
 		<div class="flex justify-between mb-3">
-			<Button on:click={toggleShow} class="mr-2">Hide</Button>
+			<Button on:click={toggleShow} class="mr-2">Collapse</Button>
 			<Button on:click={() => window.location.reload()} disabled={!$refresh}>
 				Refresh
 			</Button>
@@ -64,7 +69,10 @@
 			</select>
 		</div>
 
-		<Button on:click={reset} class="mt-2">Reset</Button>
+		<div class="flex justify-between mt-2">
+			<Button on:click={reset}>Reset</Button>
+			<Button on:click={setHash}>Share location and settings</Button>
+		</div>
 
 		<a
 			href="//github.com/istudyatuni/mandelbrot"
@@ -73,6 +81,6 @@
 			<span class="pt-1">GitHub</span>
 		</a>
 	{:else}
-		<Button on:click={toggleShow}>Show settings</Button>
+		<Button on:click={toggleShow}>Expand settings</Button>
 	{/if}
 </div>
