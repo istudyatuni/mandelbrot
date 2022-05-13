@@ -71,33 +71,17 @@
 			</span>
 		</div>
 
-		<div class="mb-2">
-			<input
-				id="wider_inputs_checkbox"
-				type="checkbox"
-				bind:checked={$settings.wider_inputs} />
-			<label for="wider_inputs_checkbox">Wider inputs</label>
-		</div>
 		<div class="flex mb-2">
 			<p>x: [</p>
-			<InputNumber
-				bind:value={$drawStore.lx}
-				on:change={should_redraw}
-				wider={$settings.wider_inputs} />
+			<InputNumber bind:value={$drawStore.lx} on:change={should_redraw} />
 			<p>;</p>
-			<InputNumber
-				bind:value={$drawStore.rx}
-				on:change={should_redraw}
-				wider={$settings.wider_inputs} />
+			<InputNumber bind:value={$drawStore.rx} on:change={should_redraw} />
 			<p>]</p>
 		</div>
 
 		<div class="flex mb-2">
 			<p>y:</p>
-			<InputNumber
-				bind:value={$drawStore.yc}
-				on:change={should_redraw}
-				wider={$settings.wider_inputs} />
+			<InputNumber bind:value={$drawStore.yc} on:change={should_redraw} />
 		</div>
 
 		<div class="mb-2">
