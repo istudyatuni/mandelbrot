@@ -8,8 +8,9 @@
 		setHash,
 		resetHash,
 	} from 'src/stores/settings'
-	import { refresh } from 'src/stores/refresh'
+	import { refresh as refreshStore } from 'src/stores/refresh'
 
+	import { drawMandelbrot } from 'src/utils/draw'
 	import { MAPS } from 'src/utils/maps'
 </script>
 
@@ -36,13 +37,14 @@
 		should_refresh()
 	}
 	function should_refresh() {
-		refresh.set(true)
+		refreshStore.set(true)
 	}
 	function reset() {
 		drawStore.set('lx', -3)
 		drawStore.set('rx', 1)
 		drawStore.set('yc', 0)
 		resetHash()
+		should_refresh()
 	}
 </script>
 
@@ -52,8 +54,8 @@
 	{#if $settings.show_settings}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Collapse</Button>
-			<Button on:click={() => window.location.reload()} disabled={!$refresh}>
-				Refresh
+			<Button on:click={drawMandelbrot} disabled={!$refreshStore}>
+				Redraw
 			</Button>
 		</div>
 

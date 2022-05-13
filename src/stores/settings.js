@@ -51,7 +51,5 @@ export function setHash() {
 }
 
 export function resetHash() {
-	let newUrl = new URL(location)
-	newUrl.hash = ''
-	location = newUrl.toString()
+	location.hash = ''
 }

@@ -4,7 +4,7 @@
 
 	import { draw as drawStore } from 'src/stores/settings'
 	import { scaleCoordinates } from 'src/utils/coordinates'
-	import { drawMandelbrot } from 'src/utils/draw'
+	import { drawMandelbrot, initDraw } from 'src/utils/draw'
 </script>
 
 <script>
@@ -13,22 +13,16 @@
 	/** @type {HTMLCanvasElement} */
 	let canvas,
 		/** @type {CanvasRenderingContext2D} */
-		gl = null,
-		/** @type {ImageData} */
-		field
+		gl = null
 
 	function init() {
 		gl = canvas.getContext('2d')
 		gl.rect(0, 0, width, height)
 		gl.fill()
 
-		draw()
-	}
+		initDraw(gl, width, height)
 
-	function draw() {
-		field = gl.getImageData(0, 0, width, height)
-		field = drawMandelbrot(field)
-		gl.putImageData(field, 0, 0)
+		drawMandelbrot()
 	}
 
 	/**
@@ -43,7 +37,7 @@
 		drawStore.set('rx', coords.rx)
 		drawStore.set('yc', coords.yc)
 
-		draw()
+		drawMandelbrot()
 	}
 
 	onMount(init)
