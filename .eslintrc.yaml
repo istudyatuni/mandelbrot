@@ -16,7 +16,8 @@ globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
 parserOptions:
-  ecmaVersion: 2020
+  # 2022 for top level await
+  ecmaVersion: 2022
   sourceType: module
 overrides:
   - files: "*.svelte"

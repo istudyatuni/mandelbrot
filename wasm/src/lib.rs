@@ -9,7 +9,7 @@ pub struct Mandelbrot {
 
 const ESCAPE_MODULUS: f64 = 2.0;
 /// number of iterations
-const DEPTH: u16 = 100;
+const DEPTH: u16 = 256;
 /// complex zero
 const Z0: Complex<f64> = Complex::new(0.0, 0.0);
 

@@ -4,6 +4,8 @@
 
 	import { draw as drawStore, settings } from 'src/stores/settings'
 	import { refresh } from 'src/stores/refresh'
+
+	import { MAPS } from 'src/utils/maps'
 </script>
 
 <script>
@@ -40,9 +42,21 @@
 			<p>]</p>
 		</div>
 
-		<div class="flex">
+		<div class="flex mb-2">
 			<p>y:</p>
 			<InputNumber bind:value={$drawStore.yc} on:change={should_refresh} />
+		</div>
+
+		<div class="flex mb-2">
+			<p class="mr-2 pt-0.5">Color palette:</p>
+			<select
+				class="p-1 rounded capitalize"
+				bind:value={$settings.palette}
+				on:change={should_refresh}>
+				{#each Object.entries(MAPS) as [key, map]}
+					<option value={key}>{map.name}</option>
+				{/each}
+			</select>
 		</div>
 
 		<Button on:click={reset} class="mt-2">Reset</Button>

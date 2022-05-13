@@ -12,5 +12,6 @@ export const draw = sessionStore('draw-settings', {
 })
 
 export const settings = sessionStore('settings', {
+	palette: 'default',
 	show_settings: true,
 })
