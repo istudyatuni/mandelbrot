@@ -14,12 +14,26 @@
 </script>
 
 <script>
+	// total width of x axis
+	$: xwidth = $drawStore.rx - $drawStore.lx
 	// calculate how many times viewport was scaled by 2
-	// 4 is initial width between [-3, 1], rx - lx == total width of x axis
-	$: magnification_depth = Math.log2(4 / ($drawStore.rx - $drawStore.lx))
+	// 4 is initial width between [-3, 1]
+	$: magnification_depth = Math.log2(4 / xwidth)
 
 	function toggleShow() {
 		settings.set('show_settings', !$settings.show_settings)
+	}
+	function decrease_depth() {
+		let half_width = xwidth / 2
+		drawStore.set('lx', $drawStore.lx - half_width)
+		drawStore.set('rx', $drawStore.rx + half_width)
+		should_refresh()
+	}
+	function increase_depth() {
+		let quart_width = xwidth / 4
+		drawStore.set('lx', $drawStore.lx + quart_width)
+		drawStore.set('rx', $drawStore.rx - quart_width)
+		should_refresh()
 	}
 	function should_refresh() {
 		refresh.set(true)
@@ -57,7 +71,11 @@
 		</div>
 
 		<div class="mb-2">
-			<p>Magnification depth: {magnification_depth}</p>
+			<p>
+				Magnification depth: {magnification_depth}
+				<Button on:click={decrease_depth} class="py-0.5">-</Button>
+				<Button on:click={increase_depth} class="py-0.5">+</Button>
+			</p>
 		</div>
 
 		<div class="flex mb-2">
