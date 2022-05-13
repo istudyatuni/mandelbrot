@@ -16,6 +16,8 @@ jobs:
           toolchain: stable
           target: wasm32-unknown-unknown
       - uses: Swatinem/rust-cache@v1
+        with:
+          working-directory: wasm
       - name: Install wasm-pack
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
