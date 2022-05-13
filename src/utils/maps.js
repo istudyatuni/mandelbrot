@@ -1,7 +1,7 @@
 // palettes is from Fractint
 // mirror: https://github.com/jhol/fractint/blob/master/maps
 
-const DEFAULT_MAP = 'default'
+import { default_map } from 'src/config'
 
 export const MAPS = {
 	altern: { name: 'altern' },
@@ -34,7 +34,7 @@ export const MAPS = {
 
 export async function load_palette(name) {
 	if (MAPS[name] === undefined) {
-		name = DEFAULT_MAP
+		name = default_map
 	}
 	const response = await fetch(
 		import.meta.env.BASE_URL + 'maps/' + name + '.map'

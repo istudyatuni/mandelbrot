@@ -1,5 +1,7 @@
 import { sessionStore } from 'svelte-storages'
 
+import { default_map } from 'src/config'
+
 /**
  * - `lx`: left x of complex plane
  * - `rx`: right x of complex plane
@@ -12,6 +14,6 @@ export const draw = sessionStore('draw-settings', {
 })
 
 export const settings = sessionStore('settings', {
-	palette: 'default',
+	palette: default_map,
 	show_settings: true,
 })
