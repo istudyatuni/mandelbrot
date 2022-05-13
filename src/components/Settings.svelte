@@ -8,7 +8,10 @@
 		setHash,
 		resetHash,
 	} from 'src/stores/settings'
-	import { redraw as redrawStore } from 'src/stores/refresh'
+	import {
+		redraw as redrawStore,
+		reload as reloadStore,
+	} from 'src/stores/refresh'
 
 	import { drawMandelbrot } from 'src/utils/draw'
 	import { MAPS } from 'src/utils/maps'
@@ -37,7 +40,11 @@
 		should_redraw()
 	}
 	function should_redraw() {
+		if ($reloadStore) return
 		redrawStore.set(true)
+	}
+	function should_reload() {
+		reloadStore.set(true)
 	}
 	function reset() {
 		drawStore.set('lx', -3)
@@ -54,7 +61,14 @@
 	{#if $settings.show_settings}
 		<div class="flex justify-between mb-3">
 			<Button on:click={toggleShow} class="mr-2">Collapse</Button>
-			<Button on:click={drawMandelbrot} disabled={!$redrawStore}>Redraw</Button>
+			<span>
+				<Button on:click={() => location.reload()} disabled={!$reloadStore}>
+					Reload
+				</Button>
+				<Button on:click={drawMandelbrot} disabled={!$redrawStore}>
+					Redraw
+				</Button>
+			</span>
 		</div>
 
 		<div class="mb-2">
@@ -100,7 +114,7 @@
 			<select
 				class="p-1 rounded capitalize"
 				bind:value={$settings.palette}
-				on:change={should_redraw}>
+				on:change={should_reload}>
 				{#each Object.entries(MAPS) as [key, map]}
 					<option value={key}>{map.name}</option>
 				{/each}
