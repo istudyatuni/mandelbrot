@@ -44,6 +44,8 @@
 		drawStore.set('yc', coords.yc)
 
 		draw()
+
+		drawStore.set('depth', $drawStore.depth + 1)
 	}
 
 	onMount(init)

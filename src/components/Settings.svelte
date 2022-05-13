@@ -19,6 +19,7 @@
 		drawStore.set('lx', -3)
 		drawStore.set('rx', 1)
 		drawStore.set('yc', 0)
+		drawStore.set('depth', 0)
 		should_refresh()
 	}
 </script>
@@ -45,6 +46,10 @@
 		<div class="flex mb-2">
 			<p>y:</p>
 			<InputNumber bind:value={$drawStore.yc} on:change={should_refresh} />
+		</div>
+
+		<div class="mb-2">
+			<p>Depth: {$drawStore.depth}</p>
 		</div>
 
 		<div class="flex mb-2">
