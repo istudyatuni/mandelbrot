@@ -14,6 +14,10 @@
 </script>
 
 <script>
+	// calculate how many times viewport was scaled by 2
+	// 4 is initial width between [-3, 1], rx - lx == total width of x axis
+	$: magnification_depth = Math.log2(4 / ($drawStore.rx - $drawStore.lx))
+
 	function toggleShow() {
 		settings.set('show_settings', !$settings.show_settings)
 	}
@@ -24,7 +28,6 @@
 		drawStore.set('lx', -3)
 		drawStore.set('rx', 1)
 		drawStore.set('yc', 0)
-		drawStore.set('depth', 0)
 		resetHash()
 	}
 </script>
@@ -54,7 +57,7 @@
 		</div>
 
 		<div class="mb-2">
-			<p>Depth: {$drawStore.depth}</p>
+			<p>Magnification depth: {magnification_depth}</p>
 		</div>
 
 		<div class="flex mb-2">
