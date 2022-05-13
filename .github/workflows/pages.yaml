@@ -27,6 +27,8 @@ jobs:
           node-version: '16'
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
+        env:
+          HUSKY: 0
       - run: yarn build
 
       - name: Deploy
