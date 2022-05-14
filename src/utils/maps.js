@@ -2,6 +2,7 @@
 // mirror: https://github.com/jhol/fractint/blob/master/maps
 
 import { default_map } from 'src/config'
+import { settings } from 'src/stores/settings'
 
 export const MAPS = {
 	altern: { name: 'altern' },
@@ -35,6 +36,7 @@ export const MAPS = {
 export async function load_palette(name) {
 	if (MAPS[name] === undefined) {
 		name = default_map
+		settings.set('palette', name)
 	}
 	const response = await fetch(
 		import.meta.env.BASE_URL + 'maps/' + name + '.map'
