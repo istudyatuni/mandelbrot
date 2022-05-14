@@ -52,11 +52,15 @@ export async function load_palette(name) {
  * @return {Number[][]}      Palette
  */
 function convert_map(map_text) {
-	return map_text.split('\n').map((e) =>
-		e
-			.trim()
-			.replace(/\s{2,}/g, ' ')
-			.split(' ')
-			.slice(0, 3)
-	)
+	return map_text
+		.trim()
+		.split('\n')
+		.map((e) =>
+			e
+				.trim()
+				.replace(/\s{2,}/g, ' ')
+				.split(' ')
+				.slice(0, 3)
+				.map((e) => parseInt(e))
+		)
 }
