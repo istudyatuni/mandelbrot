@@ -63,6 +63,7 @@ export function drawMandelbrot() {
 		image.data[j] = color[0]
 		image.data[j + 1] = color[1]
 		image.data[j + 2] = color[2]
+		// image.data[j + 3] is alpha
 	}
 
 	gl.putImageData(image, 0, 0)
