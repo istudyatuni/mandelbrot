@@ -2,12 +2,7 @@
 	import Button from 'src/components/atoms/Button.svelte'
 	import InputNumber from 'src/components/atoms/InputNumber.svelte'
 
-	import {
-		draw as drawStore,
-		settings,
-		setHash,
-		resetHash,
-	} from 'src/stores/settings'
+	import { draw as drawStore, settings, setHash } from 'src/stores/settings'
 	import {
 		redraw as redrawStore,
 		reload as reloadStore,
@@ -50,7 +45,6 @@
 		drawStore.set('lx', -3)
 		drawStore.set('rx', 1)
 		drawStore.set('yc', 0)
-		resetHash()
 		should_redraw()
 	}
 </script>
