@@ -32,10 +32,7 @@ export function initDraw(gl_context, field_width, field_height) {
 }
 
 /**
- * Draw mandelbrot on image
- *
- * @param  {ImageData}          image Image from canvas
- * @return {ImageData}                Resulting image
+ * Draw mandelbrot on canvas
  */
 export function drawMandelbrot() {
 	let image = gl.getImageData(0, 0, width, height)
