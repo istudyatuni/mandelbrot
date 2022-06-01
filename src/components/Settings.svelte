@@ -40,6 +40,7 @@
 	}
 	function should_reload() {
 		reloadStore.set(true)
+		redrawStore.set(false)
 	}
 	function reset() {
 		drawStore.set('lx', -3)
