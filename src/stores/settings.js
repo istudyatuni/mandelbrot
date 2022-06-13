@@ -17,7 +17,7 @@ export const draw = sessionStore('draw-settings', {
 
 export const settings = sessionStore('settings', {
 	palette: default_map,
-	show_settings: true,
+	show_settings: false,
 })
 
 function parseHash() {
