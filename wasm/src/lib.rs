@@ -3,17 +3,15 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Mandelbrot {
-    pixel_steps: Vec<u16>,
+    pixel_steps: Vec<u32>,
     pixels_count: usize,
 }
 
 const ESCAPE_MODULUS: f64 = 2.0;
-/// number of iterations
-const DEPTH: u16 = 256;
 /// complex zero
 const Z0: Complex<f64> = Complex::new(0.0, 0.0);
 
-const IS_IN: u16 = 0;
+const IS_IN: u32 = 0;
 
 #[wasm_bindgen]
 impl Mandelbrot {
@@ -46,7 +44,8 @@ impl Mandelbrot {
     /// * `yc` - Center of y axis (complex plane)
     /// * `w` - Width of display (canvas plane) - how many points to calculate
     /// * `h` - Height of display (canvas plane)
-    pub fn calc(&mut self, lx: f64, rx: f64, yc: f64, w: u16, h: u16) {
+    /// * `depth` - Number of iterations
+    pub fn calc(&mut self, lx: f64, rx: f64, yc: f64, w: u16, h: u16, depth: u32) {
         // total width of x axis (complex plane)
         let xwidth = rx - lx;
 
@@ -65,16 +64,16 @@ impl Mandelbrot {
         for i in 0..self.pixels_count {
             xd = (i % w as usize) as f64;
             yd = (i / w as usize) as f64;
-            self.pixel_steps[i] = check_series(lx + xd / scale, ty - yd / scale);
+            self.pixel_steps[i] = check_series(lx + xd / scale, ty - yd / scale, depth);
         }
     }
 
-    pub fn pixel_steps(&self) -> *const u16 {
+    pub fn pixel_steps(&self) -> *const u32 {
         self.pixel_steps.as_ptr()
     }
 }
 
-fn check_series(x: f64, i: f64) -> u16 {
+fn check_series(x: f64, i: f64, depth: u32) -> u32 {
     if check_cardioid(x, i) {
         return IS_IN;
     }
@@ -82,7 +81,7 @@ fn check_series(x: f64, i: f64) -> u16 {
     let point = Complex::new(x, i);
     let mut num = Z0 + point;
 
-    for step in 0..DEPTH {
+    for step in 0..depth {
         if num.norm() >= ESCAPE_MODULUS {
             return step;
         }

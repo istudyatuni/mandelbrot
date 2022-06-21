@@ -89,6 +89,11 @@
 		</div>
 
 		<div class="flex mb-2">
+			<p>Number of iterations:</p>
+			<InputNumber bind:value={$drawStore.depth} on:change={should_redraw} />
+		</div>
+
+		<div class="flex mb-2">
 			<p class="mr-2 pt-0.5">Color palette:</p>
 			<select
 				class="p-1 rounded capitalize"

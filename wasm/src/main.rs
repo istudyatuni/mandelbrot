@@ -21,6 +21,7 @@ fn benchmark() {
         0.8637609863281248,
         W as u16,
         H as u16,
+        256,
     );
 
     let elapsed = now.elapsed();

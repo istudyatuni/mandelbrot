@@ -44,10 +44,10 @@ export function drawMandelbrot() {
 	}
 
 	const set = get(drawStore)
-	mandelbrot.calc(set.lx, set.rx, set.yc, w, h)
+	mandelbrot.calc(set.lx, set.rx, set.yc, w, h, set.depth)
 
 	const pixelColorsPtr = mandelbrot.pixel_steps()
-	const pixel_steps = new Uint16Array(memory.buffer, pixelColorsPtr, len)
+	const pixel_steps = new Uint32Array(memory.buffer, pixelColorsPtr, len)
 
 	let color, ind
 
