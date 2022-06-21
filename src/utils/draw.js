@@ -7,8 +7,6 @@ import { load_palette } from 'src/utils/maps'
 import { redraw as redrawStore } from 'src/stores/refresh'
 import { draw as drawStore, settings, resetHash } from 'src/stores/settings'
 
-const DEPTH = 256
-
 /** @type {Array} */
 let color_palette = await load_palette(get(settings).palette)
 let palette_size = color_palette.length
@@ -54,7 +52,7 @@ export function drawMandelbrot() {
 	let color, ind
 
 	for (let i = 0, j = 0; i < len; i++, j += 4) {
-		ind = Math.floor((pixel_steps[i] / DEPTH) * palette_size)
+		ind = pixel_steps[i] % palette_size
 		color = color_palette[ind]
 
 		image.data[j] = color[0]
