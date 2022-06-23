@@ -7,7 +7,8 @@ pub struct Mandelbrot {
     pixels_count: usize,
 }
 
-const ESCAPE_MODULUS: f64 = 2.0;
+/// 2^2
+const ESCAPE_MODULUS: f64 = 4.0;
 /// complex zero
 const Z0: Complex<f64> = Complex::new(0.0, 0.0);
 
@@ -82,7 +83,8 @@ fn check_series(x: f64, i: f64, depth: u32) -> u32 {
     let mut num = Z0 + point;
 
     for step in 0..depth {
-        if num.norm() >= ESCAPE_MODULUS {
+        // do not calculate square root
+        if num.norm_sqr() >= ESCAPE_MODULUS {
             return step;
         }
 
