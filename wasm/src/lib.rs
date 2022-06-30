@@ -91,7 +91,7 @@ fn check_series(x: f64, i: f64, depth: u32) -> u32 {
         num = num.powu(2) + point;
     }
 
-    return IS_IN;
+    IS_IN
 }
 
 fn check_cardioid(x: f64, i: f64) -> bool {
@@ -99,17 +99,8 @@ fn check_cardioid(x: f64, i: f64) -> bool {
     let b2 = i * i;
     let q = a4 * a4 + b2;
 
-    // cardioid
-    if q * (q + a4) < b2 * 0.25 {
-        return true;
-    }
-
     let x = x + 1.0;
 
-    // circle to the left of cardioid
-    if x * x + b2 < 1.0 / 16.0 {
-        return true;
-    }
-
-    return false;
+    // cardioid or circle to the left of cardioid
+    (q * (q + a4) < b2 * 0.25) || (x * x + b2 < 1.0 / 16.0)
 }
