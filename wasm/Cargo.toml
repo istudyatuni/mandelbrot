@@ -21,5 +21,12 @@ wasm-bindgen = "0.2.100"
 # code size when deploying.
 console_error_panic_hook = { version = "0.1.7", optional = true }
 
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
 [profile.release]
 lto = true
+
+[[bench]]
+name = "calc"
+harness = false
