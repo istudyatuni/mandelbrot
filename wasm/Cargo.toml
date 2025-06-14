@@ -12,6 +12,7 @@ doctest = false
 debug = ["console_error_panic_hook"]
 
 [dependencies]
+malachite = "0.6.1"
 num-complex = "0.4.6"
 wasm-bindgen = "0.2.100"
 
