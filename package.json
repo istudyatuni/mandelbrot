@@ -4,6 +4,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:wasm": "./scripts/build-wasm.sh",
+    "build:wasm:debug": "./scripts/build-wasm.sh --features=debug",
     "prepare": "husky install .husky",
     "format": "redrun format:run:*",
     "format:run:eslint": "eslint --fix --ext .js --ext .svelte .",

@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-if [[ $CI ]]; then
-	export PATH=$PATH:$HOME/.cargo/bin
+if [ "$CI" != "" ]; then
+	export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 cd wasm
-wasm-pack --log-level warn build --release --out-dir=../src/wasm
+wasm-pack --log-level warn build --release "$@" --out-dir=../src/wasm

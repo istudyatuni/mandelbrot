@@ -18,6 +18,8 @@ Build:
 ./scripts/build-wasm.sh
 # or
 yarn build:wasm
+# version with debug logging enabled
+yarn build:wasm:debug
 ```
 
 ## Running locally
