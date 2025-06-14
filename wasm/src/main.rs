@@ -1,11 +1,10 @@
-mod lib;
-
 fn main() {}
 
 #[test]
 fn benchmark() {
-    use lib::Mandelbrot;
     use std::time::Instant;
+
+    use mandelbrot_wasm::Mandelbrot;
 
     const W: usize = 1600;
     const H: usize = 752;
