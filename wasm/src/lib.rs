@@ -75,7 +75,9 @@ impl Mandelbrot {
         // x display, y display
         let (mut xd, mut yd);
 
+        eprintln!("pixels count {}", self.pixels_count);
         for i in 0..self.pixels_count {
+            eprint!("handling pixel {i}");
             let i_r = Rational::from(i);
 
             yd = &i_r / &w;
@@ -97,7 +99,9 @@ fn check_series(x: Rational, i: Rational, depth: u32) -> u32 {
     let point = Complex::new(x, i);
     let mut num = rational_sum(&Z0, &point.clone());
 
+    eprintln!("check series");
     for step in 0..depth {
+        eprint!("series step {step}\r");
         // do not calculate square root
         if &num.re * &num.re + &num.im * &num.im >= ESCAPE_MODULUS {
             return step;
@@ -105,11 +109,13 @@ fn check_series(x: Rational, i: Rational, depth: u32) -> u32 {
 
         num = rational_sum(&rational_pow2(num), &point);
     }
+    eprintln!();
 
     IS_IN
 }
 
 fn check_cardioid(x: &Rational, i: &Rational) -> bool {
+    eprintln!("check cardioid");
     let r16 = Rational::from(16);
     let r1_4 = Rational::from_unsigneds(1u32, 4u32);
 
