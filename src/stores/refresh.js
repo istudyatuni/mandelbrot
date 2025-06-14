@@ -4,3 +4,5 @@ import { writable } from 'svelte/store'
 export const redraw = writable(false)
 // reload page
 export const reload = writable(false)
+
+export const canvasLoading = writable(false)

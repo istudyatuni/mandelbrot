@@ -4,6 +4,7 @@
 
 	import { draw as drawStore, settings, setHash } from 'src/stores/settings'
 	import {
+		canvasLoading,
 		redraw as redrawStore,
 		reload as reloadStore,
 	} from 'src/stores/refresh'
@@ -119,4 +120,11 @@
 	{:else}
 		<Button on:click={toggleShow}>Expand settings</Button>
 	{/if}
+	<span class:hidden={!$canvasLoading}>Loading</span>
 </div>
+
+<style>
+	.hidden {
+		display: none;
+	}
+</style>

@@ -1,10 +1,11 @@
 <script context="module">
-	import { onMount } from 'svelte'
+	import { tick, onMount } from 'svelte'
 	import { get } from 'svelte/store'
 
 	import { draw as drawStore } from 'src/stores/settings'
 	import { scaleCoordinates } from 'src/utils/coordinates'
 	import { drawMandelbrot, initDraw } from 'src/utils/draw'
+	import { canvasLoading } from 'src/stores/refresh'
 </script>
 
 <script>
@@ -29,7 +30,7 @@
 	 * Calculate new borders and draw
 	 * @param {PointerEvent} e
 	 */
-	function scaleDraw(e) {
+	async function scaleDraw(e) {
 		const st = get(drawStore)
 		let coords = scaleCoordinates(st, width, height, e.clientX, e.clientY)
 
@@ -37,7 +38,21 @@
 		drawStore.set('rx', coords.rx)
 		drawStore.set('yc', coords.yc)
 
+		canvasLoading.set(true)
+		// await tick()
+
 		drawMandelbrot()
+		setTimeout(() => {
+			canvasLoading.set(false)
+		}, 2000)
+
+		// setTimeout(drawMandelbrot, 400)
+		/*requestAnimationFrame(() => {
+			requestAnimationFrame(() => drawMandelbrot())
+		})*/
+
+		// await tick()
+		// canvasLoading.set(false)
 	}
 
 	onMount(init)
