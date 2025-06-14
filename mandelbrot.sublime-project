@@ -1,9 +1,10 @@
 {
-	"folders":
-	[
+	"folders": [
 		{
 			"path": ".",
-			"folder_exclude_patterns": ["//wasm"]
+			"folder_exclude_patterns": [
+				"//wasm"
+			]
 		},
 		{
 			"path": "wasm"
@@ -14,5 +15,5 @@
 			"name": "Build wasm",
 			"shell_cmd": "yarn build:wasm"
 		}
-	]
+	],
 }
