@@ -1,3 +1,7 @@
+use malachite::{
+    base::num::basic::traits::{One, Two, Zero},
+    rational::Rational,
+};
 use num_complex::Complex;
 use wasm_bindgen::prelude::*;
 
@@ -10,7 +14,7 @@ pub struct Mandelbrot {
 /// 2^2
 const ESCAPE_MODULUS: f64 = 4.0;
 /// complex zero
-const Z0: Complex<f64> = Complex::new(0.0, 0.0);
+const Z0: Complex<Rational> = Complex::new(Rational::ZERO, Rational::ZERO);
 
 const IS_IN: u32 = 0;
 
@@ -50,25 +54,33 @@ impl Mandelbrot {
     /// * `h` - Height of display (canvas plane)
     /// * `depth` - Number of iterations
     pub fn calc(&mut self, lx: f64, rx: f64, yc: f64, w: u16, h: u16, depth: u32) {
+        let lx = to_rational(lx);
+        let rx = to_rational(rx);
+        let yc = to_rational(yc);
+        let w = Rational::from(w);
+        let h = Rational::from(h);
+
         // total width of x axis (complex plane)
-        let xwidth = rx - lx;
+        let xwidth = rx - &lx;
 
         // scale coefficient between complex plane and canvas
-        let scale = (w as f64) / xwidth;
+        let scale = &w / xwidth;
 
         // complex height of y axis
-        let yheight = (h as f64) / scale;
+        let yheight = h / &scale;
 
         // top complex y coordinate
-        let ty = yc + (yheight / 2.0);
+        let ty = yc + (yheight / Rational::TWO);
 
         // x display, y display
         let (mut xd, mut yd);
 
         for i in 0..self.pixels_count {
-            xd = (i % w as usize) as f64;
-            yd = (i / w as usize) as f64;
-            self.pixel_steps[i] = check_series(lx + xd / scale, ty - yd / scale, depth);
+            let i_r = Rational::from(i);
+
+            yd = &i_r / &w;
+            xd = i_r - &yd; // i_r % w
+            self.pixel_steps[i] = check_series(&lx + xd / &scale, &ty - yd / &scale, depth);
         }
     }
 
@@ -77,33 +89,52 @@ impl Mandelbrot {
     }
 }
 
-fn check_series(x: f64, i: f64, depth: u32) -> u32 {
-    if check_cardioid(x, i) {
+fn check_series(x: Rational, i: Rational, depth: u32) -> u32 {
+    if check_cardioid(&x, &i) {
         return IS_IN;
     }
 
     let point = Complex::new(x, i);
-    let mut num = Z0 + point;
+    let mut num = rational_sum(&Z0, &point.clone());
 
     for step in 0..depth {
         // do not calculate square root
-        if num.norm_sqr() >= ESCAPE_MODULUS {
+        if &num.re * &num.re + &num.im * &num.im >= ESCAPE_MODULUS {
             return step;
         }
 
-        num = num.powu(2) + point;
+        num = rational_sum(&rational_pow2(num), &point);
     }
 
     IS_IN
 }
 
-fn check_cardioid(x: f64, i: f64) -> bool {
-    let a4 = x - 0.25;
-    let b2 = i * i;
-    let q = a4 * a4 + b2;
+fn check_cardioid(x: &Rational, i: &Rational) -> bool {
+    let r16 = Rational::from(16);
+    let r1_4 = Rational::from_unsigneds(1u32, 4u32);
 
-    let x = x + 1.0;
+    let a4 = x - &r1_4;
+    let b2 = i * i;
+    let q = &a4 * &a4 + &b2;
+
+    let x = x + Rational::ONE;
 
     // cardioid or circle to the left of cardioid
-    (q * (q + a4) < b2 * 0.25) || (x * x + b2 < 1.0 / 16.0)
+    (&q * (&q + a4) < &b2 * r1_4) || (&x * &x + b2 < Rational::ONE / r16)
+}
+
+fn to_rational(f: f64) -> Rational {
+    Rational::from_sci_string_simplest(&f.to_string()).unwrap()
+}
+
+fn rational_pow2(n: Complex<Rational>) -> Complex<Rational> {
+    // (a + bi) * (c + di) = (ac - bd) + (ad - bc)i
+    let ac_bd = &n.re * &n.re - &n.im * &n.im;
+    // let ad_bc = &n.re * &n.im - &n.im * &n.re;
+
+    Complex::new(ac_bd, Rational::ZERO)
+}
+
+fn rational_sum(a: &Complex<Rational>, b: &Complex<Rational>) -> Complex<Rational> {
+    Complex::new(&a.re + &b.re, &a.im + &b.im)
 }
