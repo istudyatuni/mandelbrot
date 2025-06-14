@@ -1,8 +1,6 @@
 use num_complex::Complex;
 use wasm_bindgen::prelude::*;
 
-mod utils;
-
 #[wasm_bindgen]
 pub struct Mandelbrot {
     pixel_steps: Vec<u32>,
@@ -20,7 +18,7 @@ const IS_IN: u32 = 0;
 impl Mandelbrot {
     pub fn new(pixels_count: usize) -> Self {
         #[cfg(feature = "debug")]
-        utils::set_panic_hook();
+        console_error_panic_hook::set_once();
 
         Self {
             pixel_steps: vec![0; pixels_count],
